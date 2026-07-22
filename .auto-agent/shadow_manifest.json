@@ -1,0 +1,48 @@
+{
+  "base_commit": "04d6db6d43a068612f1e79fc388666fdc75dee9b",
+  "command_timeout_seconds": 2400,
+  "control_commit": "457feb86bf33d34596b5a1a52e948a3f4a67a017",
+  "platform_simulation_commands": [
+    [
+      "bash",
+      "tools/sc211_shadow_platform.sh"
+    ]
+  ],
+  "project_name": "swift_conquer_game",
+  "schema_version": 1,
+  "setup_commands": [
+    [
+      "flutter",
+      "pub",
+      "get"
+    ]
+  ],
+  "trees": [
+    {
+      "commit": "457feb86bf33d34596b5a1a52e948a3f4a67a017",
+      "stage_id": "SC-211"
+    },
+    {
+      "commit": "457feb86bf33d34596b5a1a52e948a3f4a67a017",
+      "final": true,
+      "stage_id": "FINAL"
+    }
+  ],
+  "validation_commands": [
+    [
+      "flutter",
+      "analyze",
+      "--no-fatal-infos"
+    ],
+    [
+      "flutter",
+      "test"
+    ]
+  ],
+  "verifier_commands": [
+    [
+      "python3",
+      "tools/verify_sc211.py"
+    ]
+  ]
+}
