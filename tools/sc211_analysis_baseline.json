@@ -1,0 +1,567 @@
+{
+  "baseline_commit": "04d6db6d43a068612f1e79fc388666fdc75dee9b",
+  "flutter_version": "3.35.0",
+  "issue_count": 69,
+  "issues": [
+    {
+      "code": "prefer_const_constructors",
+      "column": 12,
+      "line": 12,
+      "message": "Use 'const' with the constructor to improve performance",
+      "path": "_backup_1765496519/lib/main.dart",
+      "severity": "info"
+    },
+    {
+      "code": "undefined_class",
+      "column": 9,
+      "line": 2,
+      "message": "Undefined class 'GameState'",
+      "path": "_backup_1765576900/lib/engine/engine.dart",
+      "severity": "error"
+    },
+    {
+      "code": "deprecated_member_use",
+      "column": 46,
+      "line": 31,
+      "message": "'HasGameRef' is deprecated and shouldn't be used. Use HasGameReference instead. This mixin will be removed in a future version of Flame",
+      "path": "_backup_1765576900/lib/game/swift_conquer_game.dart",
+      "severity": "info"
+    },
+    {
+      "code": "uri_does_not_exist",
+      "column": 8,
+      "line": 4,
+      "message": "Target of URI doesn't exist: '../game/flame/swiftconquer_flame_game.dart'",
+      "path": "lib/_flame_disabled/flame_screen.dart",
+      "severity": "error"
+    },
+    {
+      "code": "undefined_method",
+      "column": 18,
+      "line": 12,
+      "message": "The method 'SwiftConquerFlameGame' isn't defined for the type 'FlameScreen'",
+      "path": "lib/_flame_disabled/flame_screen.dart",
+      "severity": "error"
+    },
+    {
+      "code": "uri_does_not_exist",
+      "column": 8,
+      "line": 1,
+      "message": "Target of URI doesn't exist: '../../core/entity_id.dart'",
+      "path": "lib/_flame_disabled/game_flame/adapters/input_adapter.dart",
+      "severity": "error"
+    },
+    {
+      "code": "uri_does_not_exist",
+      "column": 8,
+      "line": 2,
+      "message": "Target of URI doesn't exist: '../../core/game_loop.dart'",
+      "path": "lib/_flame_disabled/game_flame/adapters/input_adapter.dart",
+      "severity": "error"
+    },
+    {
+      "code": "uri_does_not_exist",
+      "column": 8,
+      "line": 3,
+      "message": "Target of URI doesn't exist: '../../math/vec2.dart'",
+      "path": "lib/_flame_disabled/game_flame/adapters/input_adapter.dart",
+      "severity": "error"
+    },
+    {
+      "code": "undefined_class",
+      "column": 9,
+      "line": 6,
+      "message": "Undefined class 'GameLoop'",
+      "path": "lib/_flame_disabled/game_flame/adapters/input_adapter.dart",
+      "severity": "error"
+    },
+    {
+      "code": "undefined_class",
+      "column": 14,
+      "line": 11,
+      "message": "Undefined class 'Vec2'",
+      "path": "lib/_flame_disabled/game_flame/adapters/input_adapter.dart",
+      "severity": "error"
+    },
+    {
+      "code": "undefined_class",
+      "column": 11,
+      "line": 22,
+      "message": "Undefined class 'EntityId'",
+      "path": "lib/_flame_disabled/game_flame/adapters/input_adapter.dart",
+      "severity": "error"
+    },
+    {
+      "code": "undefined_class",
+      "column": 20,
+      "line": 29,
+      "message": "Undefined class 'Vec2'",
+      "path": "lib/_flame_disabled/game_flame/adapters/input_adapter.dart",
+      "severity": "error"
+    },
+    {
+      "code": "uri_does_not_exist",
+      "column": 8,
+      "line": 2,
+      "message": "Target of URI doesn't exist: '../../core/world_state.dart'",
+      "path": "lib/_flame_disabled/game_flame/render/world_renderer.dart",
+      "severity": "error"
+    },
+    {
+      "code": "undefined_class",
+      "column": 9,
+      "line": 5,
+      "message": "Undefined class 'WorldState'",
+      "path": "lib/_flame_disabled/game_flame/render/world_renderer.dart",
+      "severity": "error"
+    },
+    {
+      "code": "uri_does_not_exist",
+      "column": 8,
+      "line": 2,
+      "message": "Target of URI doesn't exist: '../core/game_loop.dart'",
+      "path": "lib/_flame_disabled/game_flame/swift_conquer_flame_game.dart",
+      "severity": "error"
+    },
+    {
+      "code": "undefined_class",
+      "column": 9,
+      "line": 5,
+      "message": "Undefined class 'GameLoop'",
+      "path": "lib/_flame_disabled/game_flame/swift_conquer_flame_game.dart",
+      "severity": "error"
+    },
+    {
+      "code": "undefined_method",
+      "column": 25,
+      "line": 5,
+      "message": "The method 'GameLoop' isn't defined for the type 'SwiftConquerFlameGame'",
+      "path": "lib/_flame_disabled/game_flame/swift_conquer_flame_game.dart",
+      "severity": "error"
+    },
+    {
+      "code": "uri_does_not_exist",
+      "column": 8,
+      "line": 2,
+      "message": "Target of URI doesn't exist: '../core/game_loop.dart'",
+      "path": "lib/_flame_disabled/game_flame/swiftconquer_flame_game.dart",
+      "severity": "error"
+    },
+    {
+      "code": "undefined_class",
+      "column": 9,
+      "line": 6,
+      "message": "Undefined class 'GameLoop'",
+      "path": "lib/_flame_disabled/game_flame/swiftconquer_flame_game.dart",
+      "severity": "error"
+    },
+    {
+      "code": "unchecked_use_of_nullable_value",
+      "column": 50,
+      "line": 8,
+      "message": "The operator '<=' can't be unconditionally invoked because the receiver can be 'null'",
+      "path": "lib/game/combat/death_cleanup_step.dart",
+      "severity": "error"
+    },
+    {
+      "code": "unused_import",
+      "column": 8,
+      "line": 1,
+      "message": "Unused import: 'attack_command.dart'",
+      "path": "lib/game/commands/command_queue.dart",
+      "severity": "warning"
+    },
+    {
+      "code": "unused_import",
+      "column": 8,
+      "line": 2,
+      "message": "Unused import: 'stop_command.dart'",
+      "path": "lib/game/commands/command_queue.dart",
+      "severity": "warning"
+    },
+    {
+      "code": "invalid_assignment",
+      "column": 16,
+      "line": 12,
+      "message": "A value of type 'Position' can't be assigned to a variable of type 'Vec2?'",
+      "path": "lib/game/core/commands.dart",
+      "severity": "error"
+    },
+    {
+      "code": "undefined_getter",
+      "column": 13,
+      "line": 9,
+      "message": "The getter 'teamResources' isn't defined for the type 'WorldState'",
+      "path": "lib/game/economy/economy_system.dart",
+      "severity": "error"
+    },
+    {
+      "code": "undefined_class",
+      "column": 1,
+      "line": 51,
+      "message": "Undefined class 'EOf'",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "error"
+    },
+    {
+      "code": "expected_token",
+      "column": 1,
+      "line": 52,
+      "message": "Expected to find ';'",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "error"
+    },
+    {
+      "code": "expected_executable",
+      "column": 5,
+      "line": 52,
+      "message": "Expected a method, getter, setter or operator declaration",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "error"
+    },
+    {
+      "code": "expected_token",
+      "column": 7,
+      "line": 52,
+      "message": "Expected to find ';'",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "error"
+    },
+    {
+      "code": "missing_const_final_var_or_type",
+      "column": 7,
+      "line": 52,
+      "message": "Variables must be declared using the keywords 'const', 'final', 'var' or a type name",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "error"
+    },
+    {
+      "code": "prefer_typing_uninitialized_variables",
+      "column": 7,
+      "line": 52,
+      "message": "An uninitialized variable should have an explicit type annotation",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "info"
+    },
+    {
+      "code": "expected_executable",
+      "column": 10,
+      "line": 52,
+      "message": "Expected a method, getter, setter or operator declaration",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "error"
+    },
+    {
+      "code": "expected_token",
+      "column": 11,
+      "line": 52,
+      "message": "Expected to find ';'",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "error"
+    },
+    {
+      "code": "missing_const_final_var_or_type",
+      "column": 11,
+      "line": 52,
+      "message": "Variables must be declared using the keywords 'const', 'final', 'var' or a type name",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "error"
+    },
+    {
+      "code": "prefer_typing_uninitialized_variables",
+      "column": 11,
+      "line": 52,
+      "message": "An uninitialized variable should have an explicit type annotation",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "info"
+    },
+    {
+      "code": "expected_executable",
+      "column": 15,
+      "line": 52,
+      "message": "Expected a method, getter, setter or operator declaration",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "error"
+    },
+    {
+      "code": "expected_token",
+      "column": 16,
+      "line": 52,
+      "message": "Expected to find ';'",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "error"
+    },
+    {
+      "code": "missing_const_final_var_or_type",
+      "column": 16,
+      "line": 52,
+      "message": "Variables must be declared using the keywords 'const', 'final', 'var' or a type name",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "error"
+    },
+    {
+      "code": "prefer_typing_uninitialized_variables",
+      "column": 16,
+      "line": 52,
+      "message": "An uninitialized variable should have an explicit type annotation",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "info"
+    },
+    {
+      "code": "expected_executable",
+      "column": 26,
+      "line": 52,
+      "message": "Expected a method, getter, setter or operator declaration",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "error"
+    },
+    {
+      "code": "missing_function_parameters",
+      "column": 27,
+      "line": 52,
+      "message": "Functions must have an explicit list of parameters",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "error"
+    },
+    {
+      "code": "non_constant_identifier_names",
+      "column": 27,
+      "line": 52,
+      "message": "The variable name 'simulation_runner' isn't a lowerCamelCase identifier",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "info"
+    },
+    {
+      "code": "expected_executable",
+      "column": 44,
+      "line": 52,
+      "message": "Expected a method, getter, setter or operator declaration",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "error"
+    },
+    {
+      "code": "missing_function_body",
+      "column": 44,
+      "line": 52,
+      "message": "A function body must be provided",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "error"
+    },
+    {
+      "code": "expected_token",
+      "column": 45,
+      "line": 52,
+      "message": "Expected to find ';'",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "error"
+    },
+    {
+      "code": "missing_const_final_var_or_type",
+      "column": 45,
+      "line": 52,
+      "message": "Variables must be declared using the keywords 'const', 'final', 'var' or a type name",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "error"
+    },
+    {
+      "code": "prefer_typing_uninitialized_variables",
+      "column": 45,
+      "line": 52,
+      "message": "An uninitialized variable should have an explicit type annotation",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "info"
+    },
+    {
+      "code": "expected_executable",
+      "column": 50,
+      "line": 52,
+      "message": "Expected a method, getter, setter or operator declaration",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "error"
+    },
+    {
+      "code": "expected_executable",
+      "column": 52,
+      "line": 52,
+      "message": "Expected a method, getter, setter or operator declaration",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "error"
+    },
+    {
+      "code": "directive_after_declaration",
+      "column": 1,
+      "line": 53,
+      "message": "Directives must appear before any declarations",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "error"
+    },
+    {
+      "code": "directive_after_declaration",
+      "column": 1,
+      "line": 54,
+      "message": "Directives must appear before any declarations",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "error"
+    },
+    {
+      "code": "directive_after_declaration",
+      "column": 1,
+      "line": 55,
+      "message": "Directives must appear before any declarations",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "error"
+    },
+    {
+      "code": "directive_after_declaration",
+      "column": 1,
+      "line": 56,
+      "message": "Directives must appear before any declarations",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "error"
+    },
+    {
+      "code": "directive_after_declaration",
+      "column": 1,
+      "line": 57,
+      "message": "Directives must appear before any declarations",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "error"
+    },
+    {
+      "code": "directive_after_declaration",
+      "column": 1,
+      "line": 58,
+      "message": "Directives must appear before any declarations",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "error"
+    },
+    {
+      "code": "directive_after_declaration",
+      "column": 1,
+      "line": 60,
+      "message": "Directives must appear before any declarations",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "error"
+    },
+    {
+      "code": "duplicate_definition",
+      "column": 7,
+      "line": 62,
+      "message": "The name 'SimulationRunner' is already defined",
+      "path": "lib/game/simulation/simulation_runner.dart",
+      "severity": "error"
+    },
+    {
+      "code": "unnecessary_import",
+      "column": 8,
+      "line": 1,
+      "message": "The import of 'dart:ui' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart'",
+      "path": "lib/game/ui/world_painter.dart",
+      "severity": "info"
+    },
+    {
+      "code": "unused_import",
+      "column": 8,
+      "line": 3,
+      "message": "Unused import: 'vision.dart'",
+      "path": "lib/game/vision/vision_system.dart",
+      "severity": "warning"
+    },
+    {
+      "code": "undefined_getter",
+      "column": 28,
+      "line": 16,
+      "message": "The getter 'visions' isn't defined for the type 'WorldState'",
+      "path": "lib/game/vision/vision_system.dart",
+      "severity": "error"
+    },
+    {
+      "code": "unnecessary_import",
+      "column": 8,
+      "line": 2,
+      "message": "The import of 'dart:ui' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/material.dart'",
+      "path": "lib/screens/game_screen.dart",
+      "severity": "info"
+    },
+    {
+      "code": "dangling_library_doc_comments",
+      "column": 1,
+      "line": 1,
+      "message": "Dangling library doc comment",
+      "path": "lib/sim_ext/ai/ai_types.dart",
+      "severity": "info"
+    },
+    {
+      "code": "file_names",
+      "column": 1,
+      "line": 1,
+      "message": "The file name 'README_phase159.dart' isn't a lower_case_with_underscores identifier",
+      "path": "lib/sim_ext/ai_integration/README_phase159.dart",
+      "severity": "info"
+    },
+    {
+      "code": "avoid_print",
+      "column": 5,
+      "line": 5,
+      "message": "Don't invoke 'print' in production code",
+      "path": "swift_clean/lib/game/engine_base.dart",
+      "severity": "info"
+    },
+    {
+      "code": "avoid_print",
+      "column": 5,
+      "line": 6,
+      "message": "Don't invoke 'print' in production code",
+      "path": "swift_clean/lib/game/test_map.dart",
+      "severity": "info"
+    },
+    {
+      "code": "creation_with_non_type",
+      "column": 31,
+      "line": 19,
+      "message": "The name 'TestScreen' isn't a class",
+      "path": "swift_clean/lib/main.dart",
+      "severity": "error"
+    },
+    {
+      "code": "asset_directory_does_not_exist",
+      "column": 7,
+      "line": 16,
+      "message": "The asset directory 'assets/images/' doesn't exist",
+      "path": "swift_clean/pubspec.yaml",
+      "severity": "warning"
+    },
+    {
+      "code": "asset_directory_does_not_exist",
+      "column": 7,
+      "line": 17,
+      "message": "The asset directory 'assets/sfx/' doesn't exist",
+      "path": "swift_clean/pubspec.yaml",
+      "severity": "warning"
+    },
+    {
+      "code": "duplicate_import",
+      "column": 8,
+      "line": 6,
+      "message": "Duplicate import",
+      "path": "test/ai_integration/ai_coordinator_ordering_test.dart",
+      "severity": "warning"
+    },
+    {
+      "code": "unused_import",
+      "column": 8,
+      "line": 5,
+      "message": "Unused import: 'package:swift_conquer_game/sim_ext/ai/ai_types.dart'",
+      "path": "test/ai_integration/ai_injection_driver_test.dart",
+      "severity": "warning"
+    }
+  ],
+  "policy": "Fail on any analyzer finding not present in this locked baseline. Resolved baseline findings are allowed and reported as improvements.",
+  "schema_version": 1,
+  "source": {
+    "kind": "confirmed_shadow_failure_evidence",
+    "outer_sha256": "a858931ce163fb80c8ef7226130f9c68bfa3a4e3263b916a6dcd0fa6c064100b",
+    "run_id": 29958493937,
+    "workflow": "Auto-Agent Shadow CI"
+  }
+}

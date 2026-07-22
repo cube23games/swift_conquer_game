@@ -1,0 +1,79 @@
+{
+  "automatic_tagging": false,
+  "branch": "main",
+  "ci_only_builds": true,
+  "description": "Exact reusable policy reference derived from Breakout Addiction BA-70; project-specific values must not be copied into another repository without adaptation.",
+  "forbidden_paths": [
+    "android"
+  ],
+  "forbidden_suffixes": [
+    ".pem",
+    ".key",
+    ".jks",
+    ".p12",
+    ".keystore"
+  ],
+  "github_setup": "flutter",
+  "historical_verifier_globs": [
+    "tools/verify_ba*.py"
+  ],
+  "local_path": "~/Breakout_Addiction",
+  "platform_simulation_commands": [
+    [
+      "rm",
+      "-rf",
+      "android"
+    ],
+    [
+      "flutter",
+      "create",
+      "--platforms=android",
+      "--project-name",
+      "breakout_addiction",
+      "."
+    ],
+    [
+      "python3",
+      "tools/patch_android_notifications.py"
+    ],
+    [
+      "python3",
+      "tools/patch_android_release_security.py",
+      "--channel",
+      "qa"
+    ],
+    [
+      "dart",
+      "run",
+      "flutter_launcher_icons"
+    ]
+  ],
+  "production_workflow": "CI",
+  "profile_id": "breakout_addiction_reference",
+  "reference_shadow_job_id": 88822207371,
+  "reference_shadow_run_id": 29887900058,
+  "repository": "cube23games/Breakout_addiction",
+  "required_github_account": "cube23games",
+  "schema_version": 1,
+  "setup_commands": [
+    [
+      "flutter",
+      "pub",
+      "get"
+    ]
+  ],
+  "shadow_timeout_minutes": 180,
+  "shadow_workflow": "BA70 Shadow CI",
+  "validation_commands": [
+    [
+      "flutter",
+      "analyze",
+      "--no-fatal-infos"
+    ],
+    [
+      "flutter",
+      "test"
+    ]
+  ],
+  "visible_command_max_lines": 40
+}
