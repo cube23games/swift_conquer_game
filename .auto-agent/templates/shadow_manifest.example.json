@@ -1,0 +1,27 @@
+{
+  "base_commit": "40_HEX",
+  "control_commit": "40_HEX",
+  "platform_simulation_commands": [],
+  "project_name": "REPLACE_ME",
+  "schema_version": 1,
+  "setup_commands": [],
+  "trees": [
+    {
+      "commit": "40_HEX",
+      "stage_id": "STAGE-01"
+    },
+    {
+      "commit": "40_HEX",
+      "stage_id": "FINAL"
+    }
+  ],
+  "validation_commands": [
+    [
+      "python3",
+      "-m",
+      "pytest",
+      "-q"
+    ]
+  ],
+  "verifier_commands": []
+}

@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "automatic_tagging": {
+      "const": false,
+      "type": "boolean"
+    },
+    "branch": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "ci_enabled": {
+      "type": "boolean"
+    },
+    "ci_only_builds": {
+      "type": "boolean"
+    },
+    "evidence_output_directory": {
+      "type": "string"
+    },
+    "forbidden_paths": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "forbidden_suffixes": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "local_path": {
+      "type": "string"
+    },
+    "platform_simulation_commands": {
+      "items": {
+        "items": {
+          "type": "string"
+        },
+        "minItems": 1,
+        "type": "array"
+      },
+      "type": "array"
+    },
+    "production_workflow": {
+      "type": "string"
+    },
+    "profile": {
+      "type": "string"
+    },
+    "project_name": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "project_type": {
+      "type": "string"
+    },
+    "push_after_local_verification": {
+      "type": "boolean"
+    },
+    "repository": {
+      "type": "string"
+    },
+    "required_github_account": {
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1,
+      "type": "integer"
+    },
+    "setup_commands": {
+      "items": {
+        "items": {
+          "type": "string"
+        },
+        "minItems": 1,
+        "type": "array"
+      },
+      "type": "array"
+    },
+    "shadow_workflow": {
+      "type": "string"
+    },
+    "validation_commands": {
+      "items": {
+        "items": {
+          "type": "string"
+        },
+        "minItems": 1,
+        "type": "array"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "project_name",
+    "profile",
+    "branch",
+    "automatic_tagging",
+    "setup_commands",
+    "validation_commands"
+  ],
+  "title": "Project Auto-Agent profile",
+  "type": "object"
+}

@@ -1,0 +1,16 @@
+{
+  "expected_baseline_run_id": 0,
+  "expected_branch": "main",
+  "expected_start_commit": "40_HEX",
+  "production_workflow": "CI",
+  "safety_branch": "safety/before-project-train-v1",
+  "schema_version": 1,
+  "shadow_lock_file": "SHADOW_GREEN_LOCK.json",
+  "stages": [
+    {
+      "number": 1,
+      "stage_id": "STAGE-01"
+    }
+  ],
+  "train_id": "project_train_v1"
+}

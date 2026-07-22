@@ -1,0 +1,38 @@
+{
+  "automatic_tagging": false,
+  "ci_only_builds": true,
+  "description": "Flutter/Android project operated from Termux with GitHub Actions builds",
+  "forbidden_paths": [],
+  "forbidden_suffixes": [
+    ".pem",
+    ".key",
+    ".jks",
+    ".p12",
+    ".keystore"
+  ],
+  "github_setup": "flutter",
+  "platform_simulation_commands": [],
+  "production_workflow": "CI",
+  "profile_id": "flutter_android_termux",
+  "schema_version": 1,
+  "setup_commands": [
+    [
+      "flutter",
+      "pub",
+      "get"
+    ]
+  ],
+  "shadow_timeout_minutes": 180,
+  "validation_commands": [
+    [
+      "flutter",
+      "analyze",
+      "--no-fatal-infos"
+    ],
+    [
+      "flutter",
+      "test"
+    ]
+  ],
+  "visible_command_max_lines": 40
+}

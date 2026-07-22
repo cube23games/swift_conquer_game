@@ -1,0 +1,55 @@
+# AUTO-AGENT MANAGED WORKFLOW
+name: Auto-Agent Shadow CI
+
+on:
+  push:
+    branches:
+      - 'validation/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  shadow-matrix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.35.0
+          cache: true
+
+      - name: Run every incremental tree and final combined tree
+        id: shadow
+        continue-on-error: true
+        run: python3 .auto-agent/runtime/shadow_matrix.py
+
+      - name: Upload consolidated shadow results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: AUTO_AGENT_SHADOW_RESULTS
+          path: ${{ runner.temp }}/auto-agent-shadow-results
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Set final shadow result
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f "$RUNNER_TEMP/auto-agent-shadow-results/PASS"

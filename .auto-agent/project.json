@@ -1,0 +1,63 @@
+{
+  "analysis_gate": {
+    "baseline_commit": "04d6db6d43a068612f1e79fc388666fdc75dee9b",
+    "baseline_file": "tools/sc211_analysis_baseline.json",
+    "baseline_issue_count": 69,
+    "mode": "locked-baseline-delta"
+  },
+  "automatic_tagging": false,
+  "branch": "working/phase170-movement-ci",
+  "ci_enabled": true,
+  "ci_only_builds": true,
+  "evidence_output_directory": "~/storage/downloads",
+  "expected_remote": "https://github.com/cube23games/swift_conquer_game.git",
+  "expected_start_commit": "04d6db6d43a068612f1e79fc388666fdc75dee9b",
+  "flutter_version": "3.35.0",
+  "forbidden_paths": [],
+  "forbidden_suffixes": [
+    ".pem",
+    ".key",
+    ".jks",
+    ".p12",
+    ".keystore"
+  ],
+  "governance_stage": "SC-211",
+  "installed_utc": "2026-07-22T20:57:51.833395+00:00",
+  "java_version": "17",
+  "local_path": "/data/data/com.termux/files/home/cube23/swift_conquer_game",
+  "platform_simulation_commands": [
+    [
+      "bash",
+      "tools/sc211_shadow_platform.sh"
+    ]
+  ],
+  "production_workflow": "SwiftConquer APK Build",
+  "profile": "flutter_android_termux",
+  "project_name": "swift_conquer_game",
+  "project_type": "flutter",
+  "push_after_local_verification": true,
+  "repository": "cube23games/swift_conquer_game",
+  "required_github_account": "cube23games",
+  "schema_version": 1,
+  "setup_commands": [
+    [
+      "flutter",
+      "pub",
+      "get"
+    ]
+  ],
+  "shadow_branch_prefix": "validation/auto-agent-shadow",
+  "shadow_workflow": "Auto-Agent Shadow CI",
+  "starter_version": "1.0.0",
+  "validation_commands": [
+    [
+      "python3",
+      "tools/sc211_analyze_gate.py"
+    ],
+    [
+      "flutter",
+      "test"
+    ]
+  ],
+  "visible_command_max_lines": 40
+}
