@@ -1,0 +1,21 @@
+{
+  "automatic_tagging": false,
+  "ci_only_builds": false,
+  "description": "Conservative project-neutral defaults",
+  "forbidden_paths": [],
+  "forbidden_suffixes": [
+    ".pem",
+    ".key",
+    ".jks",
+    ".p12",
+    ".keystore"
+  ],
+  "platform_simulation_commands": [],
+  "production_workflow": "CI",
+  "profile_id": "generic",
+  "schema_version": 1,
+  "setup_commands": [],
+  "shadow_timeout_minutes": 180,
+  "validation_commands": [],
+  "visible_command_max_lines": 40
+}

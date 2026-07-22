@@ -1,0 +1,26 @@
+{
+  "automatic_tagging": false,
+  "branch": "main",
+  "ci_only_builds": false,
+  "evidence_output_directory": "~/storage/downloads",
+  "expected_remote": "https://github.com/owner/repository.git",
+  "forbidden_paths": [],
+  "forbidden_suffixes": [
+    ".pem",
+    ".key",
+    ".jks",
+    ".p12",
+    ".keystore"
+  ],
+  "local_path": "~/path/to/repository",
+  "platform_simulation_commands": [],
+  "production_workflow": "CI",
+  "profile": "generic",
+  "project_name": "REPLACE_ME",
+  "repository": "owner/repository",
+  "required_github_account": "owner",
+  "schema_version": 1,
+  "setup_commands": [],
+  "shadow_branch_prefix": "validation/auto-agent-shadow",
+  "validation_commands": []
+}

@@ -1,0 +1,21 @@
+{
+  "commit_message": "STAGE-01 focused change",
+  "files": [
+    {
+      "input_sha256": "64_HEX_OR_NULL",
+      "output_sha256": "64_HEX",
+      "path": "path/to/file"
+    }
+  ],
+  "historical_verifiers": [],
+  "number": 1,
+  "schema_version": 1,
+  "stage_id": "STAGE-01",
+  "stage_verifiers": [
+    [
+      "python3",
+      "tools/verify_stage_01.py"
+    ]
+  ],
+  "title": "Focused stage"
+}
