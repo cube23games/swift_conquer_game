@@ -1,0 +1,85 @@
+name: SC-212 Inventory Shadow
+
+on:
+  push:
+    branches:
+      - 'validation/auto-agent-shadow/sc212-inventory-*'
+
+permissions:
+  contents: read
+
+jobs:
+  inventory:
+    runs-on: ubuntu-24.04
+    env:
+      SC212_BASE_COMMIT: 949bb937fc06a4c18cb184fcab416aa0ea90b4a3
+      SC212_OUT: build/sc212_inventory
+    steps:
+      - name: Checkout validation branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Show immutable context
+        run: |
+          set -euo pipefail
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "Branch:     $GITHUB_REF_NAME"
+          echo "Stage SHA:  $GITHUB_SHA"
+          echo "Base SHA:   $SC212_BASE_COMMIT"
+          git cat-file -e "$SC212_BASE_COMMIT^{commit}"
+
+      - name: Run inventory and verifier
+        id: sc212
+        continue-on-error: true
+        run: |
+          set +e
+          mkdir -p "$SC212_OUT"
+          : > "$SC212_OUT/runner.log"
+          python3 tools/sc212_inventory.py \
+            --root . --out "$SC212_OUT" \
+            --base "$SC212_BASE_COMMIT" \
+            >> "$SC212_OUT/runner.log" 2>&1
+          rc=$?
+          if [ "$rc" -eq 0 ]; then
+            python3 tools/verify_sc212.py \
+              --root . \
+              --inventory "$SC212_OUT/sc212_inventory.json" \
+              --base "$SC212_BASE_COMMIT" \
+              >> "$SC212_OUT/runner.log" 2>&1
+            rc=$?
+          fi
+          printf '%s\n' "$rc" > "$SC212_OUT/exit_code.txt"
+          cat "$SC212_OUT/runner.log"
+          exit 0
+
+      - name: Seal SC-212 evidence
+        if: always()
+        run: |
+          python3 tools/sc212_seal_evidence.py \
+            --out "$SC212_OUT" \
+            --base "$SC212_BASE_COMMIT" \
+            --repo "$GITHUB_REPOSITORY" \
+            --branch "$GITHUB_REF_NAME" \
+            --stage-commit "$GITHUB_SHA" \
+            --run-id "$GITHUB_RUN_ID" \
+            --run-attempt "$GITHUB_RUN_ATTEMPT"
+
+      - name: Upload SC-212 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: SWIFTCONQUER_SC212_INVENTORY_EVIDENCE_${{ github.run_id }}
+          path: |
+            build/sc212_inventory/SWIFTCONQUER_SC212_INVENTORY_EVIDENCE_v1.zip
+            build/sc212_inventory/SWIFTCONQUER_SC212_INVENTORY_EVIDENCE_v1.zip.sha256
+            build/sc212_inventory/SC212_INVENTORY_LOCK_v1.json
+            build/sc212_inventory/runner.log
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Enforce verifier result
+        if: always()
+        run: |
+          test -f "$SC212_OUT/exit_code.txt"
+          test "$(cat "$SC212_OUT/exit_code.txt")" = "0"
