@@ -1,0 +1,55 @@
+name: SC-212 Canonical Reconciliation Shadow
+
+on:
+  push:
+    branches:
+      - 'validation/auto-agent-shadow/sc212-reconciliation-*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout validation commit
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Verify and seal SC-212
+        id: verify
+        shell: bash
+        run: |
+          set +e
+          mkdir -p reports/sc212_reconciliation dist/sc212_reconciliation
+          python3 tools/verify_sc212_reconciliation.py \
+            --repo . \
+            --report-dir reports/sc212_reconciliation \
+            2>&1 | tee reports/sc212_reconciliation/runner.log
+          code=${PIPESTATUS[0]}
+          python3 tools/sc212_seal_reconciliation_evidence.py \
+            --repo . \
+            --run-id '${{ github.run_id }}' \
+            --run-attempt '${{ github.run_attempt }}' \
+            --runner-log reports/sc212_reconciliation/runner.log \
+            --out dist/sc212_reconciliation
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Upload SC-212 reconciliation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: SWIFTCONQUER_SC212_RECONCILIATION_EVIDENCE_${{ github.run_id }}
+          path: dist/sc212_reconciliation/
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Enforce verifier result
+        if: always()
+        shell: bash
+        run: |
+          test '${{ steps.verify.outputs.exit_code }}' = '0'
