@@ -1,0 +1,368 @@
+{
+  "archive_reference_roots": [
+    {
+      "path": "_backup_1765496519/",
+      "policy": "REFERENCE_ONLY_NO_RUNTIME_IMPORTS_NO_DELETION_IN_SC212"
+    },
+    {
+      "path": "_backup_1765576900/",
+      "policy": "REFERENCE_ONLY_NO_RUNTIME_IMPORTS_NO_DELETION_IN_SC212"
+    },
+    {
+      "path": "swift_clean/",
+      "policy": "REFERENCE_ONLY_SEPARATE_EXPERIMENTAL_APP_NO_PRODUCTION_ENTRY"
+    }
+  ],
+  "base_commit": "949bb937fc06a4c18cb184fcab416aa0ea90b4a3",
+  "canonical_runtime": {
+    "application_widget": "SwiftConquerApp",
+    "entry_point": "lib/main.dart",
+    "package_manifest": "pubspec.yaml",
+    "primary_screen": "lib/screens/game_screen.dart",
+    "production_workflow": ".github/workflows/swiftconquer_apk.yml",
+    "runtime_root": "lib/",
+    "shadow_workflow": ".github/workflows/auto-agent-shadow-ci.yml",
+    "test_root": "test/"
+  },
+  "classification_counts": {
+    "archived_legacy": 39,
+    "documentation": 12,
+    "generated_or_project_metadata": 1,
+    "phase_171_210_remnant": 7,
+    "retained_canonical_candidate": 37,
+    "retained_support": 165,
+    "test_or_verifier": 14
+  },
+  "deferred_architecture_conflicts": [
+    {
+      "decision": "SC213_REQUIRED",
+      "group": "auto-agent-shadow-ci.yml",
+      "live_candidates": [
+        ".auto-agent/templates/github/auto-agent-shadow-ci.yml",
+        ".github/workflows/auto-agent-shadow-ci.yml"
+      ],
+      "paths": [
+        ".auto-agent/templates/github/auto-agent-shadow-ci.yml",
+        ".github/workflows/auto-agent-shadow-ci.yml"
+      ],
+      "reason": "Multiple non-archive runtime candidates remain; architecture lock must choose one canonical implementation."
+    },
+    {
+      "decision": "SC213_REQUIRED",
+      "group": "entity_id.dart",
+      "live_candidates": [
+        "lib/game/core/entity_id.dart",
+        "lib/game/models/entity_id.dart"
+      ],
+      "paths": [
+        "lib/game/core/entity_id.dart",
+        "lib/game/models/entity_id.dart"
+      ],
+      "reason": "Multiple non-archive runtime candidates remain; architecture lock must choose one canonical implementation."
+    },
+    {
+      "decision": "SC213_REQUIRED",
+      "group": "input_controller.dart",
+      "live_candidates": [
+        "lib/game/input/input_controller.dart",
+        "lib/game/ui/input_controller.dart"
+      ],
+      "paths": [
+        "lib/game/input/input_controller.dart",
+        "lib/game/ui/input_controller.dart"
+      ],
+      "reason": "Multiple non-archive runtime candidates remain; architecture lock must choose one canonical implementation."
+    },
+    {
+      "decision": "SC213_REQUIRED",
+      "group": "simulation_step.dart",
+      "live_candidates": [
+        "lib/game/core/simulation_step.dart",
+        "lib/game/simulation/simulation_step.dart"
+      ],
+      "paths": [
+        "lib/game/core/simulation_step.dart",
+        "lib/game/simulation/simulation_step.dart"
+      ],
+      "reason": "Multiple non-archive runtime candidates remain; architecture lock must choose one canonical implementation."
+    },
+    {
+      "decision": "SC213_REQUIRED",
+      "group": "victory_system.dart",
+      "live_candidates": [
+        "lib/game/core/victory_system.dart",
+        "lib/game/victory/victory_system.dart"
+      ],
+      "paths": [
+        "lib/game/core/victory_system.dart",
+        "lib/game/victory/victory_system.dart"
+      ],
+      "reason": "Multiple non-archive runtime candidates remain; architecture lock must choose one canonical implementation."
+    }
+  ],
+  "entry_point_decisions": [
+    {
+      "decision": "CANONICAL_PRODUCTION_ENTRY",
+      "path": "lib/main.dart"
+    },
+    {
+      "decision": "REFERENCE_ONLY_NOT_PRODUCTION",
+      "path": "swift_clean/lib/main.dart"
+    },
+    {
+      "decision": "ARCHIVE_ONLY",
+      "path": "_backup_1765496519/lib/main.dart"
+    },
+    {
+      "decision": "ARCHIVE_ONLY",
+      "path": "_backup_1765576900/lib/main.dart"
+    }
+  ],
+  "phase_171_210_remnants": [
+    {
+      "path": "AGENTS.md",
+      "policy": "PRESERVE_FOR_TRACEABILITY_REVIEW_BEFORE_REMOVAL"
+    },
+    {
+      "path": "CHATGPT_PROJECT_KNOWLEDGE.md",
+      "policy": "PRESERVE_FOR_TRACEABILITY_REVIEW_BEFORE_REMOVAL"
+    },
+    {
+      "path": "phase171_180_basebuilding.sh",
+      "policy": "PRESERVE_FOR_TRACEABILITY_REVIEW_BEFORE_REMOVAL"
+    },
+    {
+      "path": "phase181_190_rts_controls.sh",
+      "policy": "PRESERVE_FOR_TRACEABILITY_REVIEW_BEFORE_REMOVAL"
+    },
+    {
+      "path": "phase191_195_ui_polish.sh",
+      "policy": "PRESERVE_FOR_TRACEABILITY_REVIEW_BEFORE_REMOVAL"
+    },
+    {
+      "path": "phase196_205_layout_and_production.sh",
+      "policy": "PRESERVE_FOR_TRACEABILITY_REVIEW_BEFORE_REMOVAL"
+    },
+    {
+      "path": "phase206_210_layout_cleanup.sh",
+      "policy": "PRESERVE_FOR_TRACEABILITY_REVIEW_BEFORE_REMOVAL"
+    }
+  ],
+  "production_branch": "working/phase170-movement-ci",
+  "production_policy": {
+    "automatic_tags_allowed": false,
+    "deletions_allowed": false,
+    "next_stage_after_production_lock": "SC-213",
+    "production_commit_allowed_in_shadow_package": false,
+    "renames_allowed": false
+  },
+  "purpose": "Canonical runtime reconciliation map produced from the verified SC-212 background inventory.",
+  "repository": "cube23games/swift_conquer_game",
+  "resolved_duplicate_groups": [
+    {
+      "archive_only": [
+        "_backup_1765496519/assets/fonts/.gitkeep",
+        "_backup_1765496519/assets/images/.gitkeep",
+        "_backup_1765496519/assets/sfx/.gitkeep"
+      ],
+      "decision": "RESOLVED_FOR_SC212",
+      "group": ".gitkeep",
+      "paths": [
+        "_backup_1765496519/assets/fonts/.gitkeep",
+        "_backup_1765496519/assets/images/.gitkeep",
+        "_backup_1765496519/assets/sfx/.gitkeep"
+      ],
+      "preferred": null,
+      "reason": "Root/runtime path retained when present; backup and swift_clean paths are reference-only."
+    },
+    {
+      "archive_only": [
+        "_backup_1765496519/analysis_options.yaml",
+        "_backup_1765576900/analysis_options.yaml",
+        "swift_clean/analysis_options.yaml"
+      ],
+      "decision": "RESOLVED_FOR_SC212",
+      "group": "analysis_options.yaml",
+      "paths": [
+        "_backup_1765496519/analysis_options.yaml",
+        "_backup_1765576900/analysis_options.yaml",
+        "analysis_options.yaml",
+        "swift_clean/analysis_options.yaml"
+      ],
+      "preferred": "analysis_options.yaml",
+      "reason": "Root/runtime path retained when present; backup and swift_clean paths are reference-only."
+    },
+    {
+      "archive_only": [
+        "_backup_1765576900/lib/engine/systems/combat_system.dart"
+      ],
+      "decision": "RESOLVED_FOR_SC212",
+      "group": "combat_system.dart",
+      "paths": [
+        "_backup_1765576900/lib/engine/systems/combat_system.dart",
+        "lib/game/systems/combat_system.dart"
+      ],
+      "preferred": "lib/game/systems/combat_system.dart",
+      "reason": "Root/runtime path retained when present; backup and swift_clean paths are reference-only."
+    },
+    {
+      "archive_only": [
+        "_backup_1765576900/lib/engine/systems/economy_system.dart"
+      ],
+      "decision": "RESOLVED_FOR_SC212",
+      "group": "economy_system.dart",
+      "paths": [
+        "_backup_1765576900/lib/engine/systems/economy_system.dart",
+        "lib/game/economy/economy_system.dart"
+      ],
+      "preferred": "lib/game/economy/economy_system.dart",
+      "reason": "Root/runtime path retained when present; backup and swift_clean paths are reference-only."
+    },
+    {
+      "archive_only": [
+        "_backup_1765576900/lib/core/engine/engine.dart",
+        "_backup_1765576900/lib/engine/core/engine.dart",
+        "_backup_1765576900/lib/engine/engine.dart"
+      ],
+      "decision": "RESOLVED_FOR_SC212",
+      "group": "engine.dart",
+      "paths": [
+        "_backup_1765576900/lib/core/engine/engine.dart",
+        "_backup_1765576900/lib/engine/core/engine.dart",
+        "_backup_1765576900/lib/engine/engine.dart"
+      ],
+      "preferred": null,
+      "reason": "Root/runtime path retained when present; backup and swift_clean paths are reference-only."
+    },
+    {
+      "archive_only": [
+        "_backup_1765576900/lib/core/engine/game_state.dart",
+        "_backup_1765576900/lib/engine/game_state.dart"
+      ],
+      "decision": "RESOLVED_FOR_SC212",
+      "group": "game_state.dart",
+      "paths": [
+        "_backup_1765576900/lib/core/engine/game_state.dart",
+        "_backup_1765576900/lib/engine/game_state.dart",
+        "lib/game/state/game_state.dart"
+      ],
+      "preferred": "lib/game/state/game_state.dart",
+      "reason": "Root/runtime path retained when present; backup and swift_clean paths are reference-only."
+    },
+    {
+      "archive_only": [
+        "_backup_1765576900/lib/features/home/home_screen.dart",
+        "_backup_1765576900/lib/screens/home_screen.dart",
+        "swift_clean/lib/screens/home_screen.dart"
+      ],
+      "decision": "RESOLVED_FOR_SC212",
+      "group": "home_screen.dart",
+      "paths": [
+        "_backup_1765576900/lib/features/home/home_screen.dart",
+        "_backup_1765576900/lib/screens/home_screen.dart",
+        "swift_clean/lib/screens/home_screen.dart"
+      ],
+      "preferred": null,
+      "reason": "Root/runtime path retained when present; backup and swift_clean paths are reference-only."
+    },
+    {
+      "archive_only": [
+        "_backup_1765496519/lib/main.dart",
+        "_backup_1765576900/lib/main.dart",
+        "swift_clean/lib/main.dart"
+      ],
+      "decision": "RESOLVED_FOR_SC212",
+      "group": "main.dart",
+      "paths": [
+        "_backup_1765496519/lib/main.dart",
+        "_backup_1765576900/lib/main.dart",
+        "lib/main.dart",
+        "swift_clean/lib/main.dart"
+      ],
+      "preferred": "lib/main.dart",
+      "reason": "Root/runtime path retained when present; backup and swift_clean paths are reference-only."
+    },
+    {
+      "archive_only": [
+        "_backup_1765496519/pubspec.yaml",
+        "_backup_1765576900/pubspec.yaml",
+        "swift_clean/pubspec.yaml"
+      ],
+      "decision": "RESOLVED_FOR_SC212",
+      "group": "pubspec.yaml",
+      "paths": [
+        "_backup_1765496519/pubspec.yaml",
+        "_backup_1765576900/pubspec.yaml",
+        "pubspec.yaml",
+        "swift_clean/pubspec.yaml"
+      ],
+      "preferred": "pubspec.yaml",
+      "reason": "Root/runtime path retained when present; backup and swift_clean paths are reference-only."
+    },
+    {
+      "archive_only": [
+        "_backup_1765576900/lib/features/testmap/test_map_screen.dart",
+        "_backup_1765576900/lib/screens/test_map_screen.dart"
+      ],
+      "decision": "RESOLVED_FOR_SC212",
+      "group": "test_map_screen.dart",
+      "paths": [
+        "_backup_1765576900/lib/features/testmap/test_map_screen.dart",
+        "_backup_1765576900/lib/screens/test_map_screen.dart"
+      ],
+      "preferred": null,
+      "reason": "Root/runtime path retained when present; backup and swift_clean paths are reference-only."
+    },
+    {
+      "archive_only": [
+        "_backup_1765576900/lib/screens/test_screen.dart",
+        "swift_clean/lib/screens/test_screen.dart"
+      ],
+      "decision": "RESOLVED_FOR_SC212",
+      "group": "test_screen.dart",
+      "paths": [
+        "_backup_1765576900/lib/screens/test_screen.dart",
+        "lib/screens/test_screen.dart",
+        "swift_clean/lib/screens/test_screen.dart"
+      ],
+      "preferred": "lib/screens/test_screen.dart",
+      "reason": "Root/runtime path retained when present; backup and swift_clean paths are reference-only."
+    },
+    {
+      "archive_only": [
+        "_backup_1765576900/lib/game/components/unit.dart",
+        "_backup_1765576900/lib/game/units/unit.dart"
+      ],
+      "decision": "RESOLVED_FOR_SC212",
+      "group": "unit.dart",
+      "paths": [
+        "_backup_1765576900/lib/game/components/unit.dart",
+        "_backup_1765576900/lib/game/units/unit.dart",
+        "lib/game/entities/unit.dart"
+      ],
+      "preferred": "lib/game/entities/unit.dart",
+      "reason": "Root/runtime path retained when present; backup and swift_clean paths are reference-only."
+    }
+  ],
+  "schema_version": 1,
+  "source_inventory_lock_sha256": "c88411cef0c7b40861bd2adbab0812b32dcfce76048902a05377abc6361291fb",
+  "source_inventory_run_id": 30043584028,
+  "source_inventory_validation_commit": "cc6faac213d7a28e8f076eb1af67ffffd322afe9",
+  "source_inventory_zip_sha256": "90f5ccd926acc2c47fd1750c10ab87828ba752b47c6368c200664eaf840836aa",
+  "stage": "SC-212",
+  "tracked_file_count": 275,
+  "workflow_decisions": [
+    {
+      "decision": "CANONICAL_PRODUCTION_BUILD",
+      "path": ".github/workflows/swiftconquer_apk.yml"
+    },
+    {
+      "decision": "CANONICAL_SHADOW_GOVERNANCE",
+      "path": ".github/workflows/auto-agent-shadow-ci.yml"
+    },
+    {
+      "decision": "TEMPLATE_REFERENCE_ONLY",
+      "path": ".auto-agent/templates/github/auto-agent-shadow-ci.yml"
+    }
+  ]
+}
