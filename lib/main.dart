@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'sc_master/ui/sc_master_debug_screen.dart';
 import 'screens/game_screen.dart';
+
+const bool _useMasterSlice =
+    bool.fromEnvironment('SC_MASTER_SLICE', defaultValue: false);
 
 Future<void> _applyDemoSystemUi() async {
   await SystemChrome.setPreferredOrientations(const [
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
   ]);
-
   await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 }
 
@@ -51,7 +54,7 @@ class _SwiftConquerAppState extends State<SwiftConquerApp>
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: GameScreen(),
+      home: _useMasterSlice ? ScMasterDebugScreen() : GameScreen(),
     );
   }
 }
