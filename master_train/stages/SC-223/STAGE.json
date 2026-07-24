@@ -1,0 +1,23 @@
+{
+  "commit_message": "SC-223: Move command and authoritative order application",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/orders/move_command.dart",
+      "sha256": "d589ca9e2f982c948c605d8080af880516111fbdd44cc23b233d6ff83219e190"
+    },
+    {
+      "path": "lib/sc_master/orders/move_order_service.dart",
+      "sha256": "6fad275052f4961c688c20f9e238a76f29fa6c1c5f1babd2dc70f7fa48e7f154"
+    },
+    {
+      "path": "test/sc_master/controls/sc223_move_command_test.dart",
+      "sha256": "702ccb9701b6942e108fa4510d55f92ac33057457694d399fe115e3998455070"
+    }
+  ],
+  "group": "controls",
+  "number": 223,
+  "required_tokens": [],
+  "stage": "SC-223",
+  "title": "Move command and authoritative order application"
+}

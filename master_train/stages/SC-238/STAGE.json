@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-238: Mobile HQ deployment and building lifecycle",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/construction/building_lifecycle.dart",
+      "sha256": "997c613943a91bab4fb871df1f7fe39ba3454dbf750b92e6a29e20c4281dfc9f"
+    },
+    {
+      "path": "test/sc_master/economy/sc238_building_lifecycle_test.dart",
+      "sha256": "ec9240a6ae93ff1edeb70d342403d8a9f816007f0427c08d834dca25b6afaec1"
+    }
+  ],
+  "group": "economy",
+  "number": 238,
+  "required_tokens": [],
+  "stage": "SC-238",
+  "title": "Mobile HQ deployment and building lifecycle"
+}

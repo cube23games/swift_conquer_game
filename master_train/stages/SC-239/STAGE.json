@@ -1,0 +1,23 @@
+{
+  "commit_message": "SC-239: Per-building production queue model",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/production/production_item.dart",
+      "sha256": "73ed05f47db7ed26e89d1f010f55e362ad5ceba6e87299daae9db05d7982eec4"
+    },
+    {
+      "path": "lib/sc_master/production/production_queue.dart",
+      "sha256": "c3591598e0dc18942be6f0d0f61f29a6e2cd6b70622aa559c0a7812675ec62d3"
+    },
+    {
+      "path": "test/sc_master/economy/sc239_production_queue_test.dart",
+      "sha256": "6d04bb5eddc1a5900007890c7934be09af84ddeca714e86b0e86e2daa36c0e22"
+    }
+  ],
+  "group": "economy",
+  "number": 239,
+  "required_tokens": [],
+  "stage": "SC-239",
+  "title": "Per-building production queue model"
+}

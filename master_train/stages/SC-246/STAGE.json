@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-246: Engineer capture and sabotage progress",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/engineer/infiltration_service.dart",
+      "sha256": "33cece0fded2e5c8981c9d78845557a5c90f333a41ecdb1961782a5c728cd2e5"
+    },
+    {
+      "path": "test/sc_master/combat/sc246_infiltration_test.dart",
+      "sha256": "0b31897b42774bc7f61415e0cffb7d7ef5797ab8cef1cb939958852b1ea5b71e"
+    }
+  ],
+  "group": "combat",
+  "number": 246,
+  "required_tokens": [],
+  "stage": "SC-246",
+  "title": "Engineer capture and sabotage progress"
+}

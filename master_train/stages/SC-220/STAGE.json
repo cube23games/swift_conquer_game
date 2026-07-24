@@ -1,0 +1,44 @@
+{
+  "commit_message": "SC-220: Headless world foundation and first device-gate smoke",
+  "device_gate": true,
+  "files": [
+    {
+      "path": "lib/sc_master/foundation/foundation_smoke.dart",
+      "sha256": "d44df4ffb2d35e058e9807d978bc9ae86301f79217f99e43ec9f0a529eaeb4a6"
+    },
+    {
+      "path": "lib/sc_master/world/building_state.dart",
+      "sha256": "db71a1991b253df757167194d28dd45518a1bbaa9aaf7e926dd44dd5400e3029"
+    },
+    {
+      "path": "lib/sc_master/world/team_state.dart",
+      "sha256": "d0f828d0aa940a93fdc47018210472ff29938a0d02b43cd8d5c15bb86be5d2d4"
+    },
+    {
+      "path": "lib/sc_master/world/unit_state.dart",
+      "sha256": "5ac3a0dc53ff0a246de6b6f131fb368d71b55d418ec185f4d0b62b75049d859f"
+    },
+    {
+      "path": "lib/sc_master/world/world_state.dart",
+      "sha256": "d316c52b74efeeb0c6578e3817ffbc2032583b2d67657c53c8ae7ab94b89da4e"
+    },
+    {
+      "path": "test/sc_master/foundation/sc220_foundation_smoke_test.dart",
+      "sha256": "ab1fe348d1de108a26d5406d86956b84e364412e1411b6ab4006770990e4ef7c"
+    }
+  ],
+  "group": "foundation",
+  "number": 220,
+  "required_tokens": [
+    {
+      "path": "lib/sc_master/world/world_state.dart",
+      "value": "final class WorldState"
+    },
+    {
+      "path": "lib/sc_master/foundation/foundation_smoke.dart",
+      "value": "FoundationSmoke"
+    }
+  ],
+  "stage": "SC-220",
+  "title": "Headless world foundation and first device-gate smoke"
+}

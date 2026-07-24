@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-262: AI economy planner",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/ai/ai_economy_planner.dart",
+      "sha256": "6e3d2db98472a5078e21fc4d247802e3df207299f88704fa580b64331ad97756"
+    },
+    {
+      "path": "test/sc_master/final/sc262_ai_economy_test.dart",
+      "sha256": "91369479165240fc25af961218103c4a218ae92357b17f0f5e08bd07de1db248"
+    }
+  ],
+  "group": "final",
+  "number": 262,
+  "required_tokens": [],
+  "stage": "SC-262",
+  "title": "AI economy planner"
+}

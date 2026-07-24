@@ -1,0 +1,23 @@
+{
+  "commit_message": "SC-227: Attack command contract and ownership checks",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/orders/attack_command.dart",
+      "sha256": "593c1b6f279bfa6dde460762c75fa0864a647ba28347c6dded1bf7851f27aa2d"
+    },
+    {
+      "path": "lib/sc_master/orders/attack_order_service.dart",
+      "sha256": "2f8f3603e72f4c27a748ad06f67655b62843a30496a77bbd49e6c62c205b6da4"
+    },
+    {
+      "path": "test/sc_master/controls/sc227_attack_command_test.dart",
+      "sha256": "d797b62737283385c838713b3dda457d7ae861bcce29f1013ccecdd28c7fee11"
+    }
+  ],
+  "group": "controls",
+  "number": 227,
+  "required_tokens": [],
+  "stage": "SC-227",
+  "title": "Attack command contract and ownership checks"
+}

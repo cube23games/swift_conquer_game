@@ -1,0 +1,27 @@
+{
+  "commit_message": "SC-218: Replay journal and deterministic state hashing",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/core/replay/replay_event.dart",
+      "sha256": "06c6ada58c07d43d55c306565cc1d094763b97067cd54609c4c6d76297b54a74"
+    },
+    {
+      "path": "lib/sc_master/core/replay/replay_journal.dart",
+      "sha256": "0f1a781a0e05ff88432266ed91077b5cea4b2b7070b40b6ed22c12bf8e7b0036"
+    },
+    {
+      "path": "lib/sc_master/core/replay/state_hasher.dart",
+      "sha256": "dc2763ecb51a3fed108de355866c1c61a28ddd021390d9d5dbda847cb86e0dee"
+    },
+    {
+      "path": "test/sc_master/foundation/sc218_replay_hash_test.dart",
+      "sha256": "bf6822fbc2fcdf090808048c74b276554daf70d5415a41fc9d7fcf6af5a1d02a"
+    }
+  ],
+  "group": "foundation",
+  "number": 218,
+  "required_tokens": [],
+  "stage": "SC-218",
+  "title": "Replay journal and deterministic state hashing"
+}

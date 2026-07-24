@@ -1,0 +1,23 @@
+{
+  "commit_message": "SC-248: Deterministic death cleanup and wreck records",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/combat/death_cleanup.dart",
+      "sha256": "672fd50409dad28e6001ef25d7374c7dbcfb97d78e695373334bbe16d09676d8"
+    },
+    {
+      "path": "lib/sc_master/combat/wreck_record.dart",
+      "sha256": "208a5df1f48d3f89651cec985575e5bb8b4c5707d16fd06d23a7ebc7d0a70b8f"
+    },
+    {
+      "path": "test/sc_master/combat/sc248_death_cleanup_test.dart",
+      "sha256": "1b3731c0eaab33f87128619689eb372ecfbe8f3c0f4500bf07a06ba55a23d8aa"
+    }
+  ],
+  "group": "combat",
+  "number": 248,
+  "required_tokens": [],
+  "stage": "SC-248",
+  "title": "Deterministic death cleanup and wreck records"
+}

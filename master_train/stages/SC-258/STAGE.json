@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-258: Superweapon charging and low-power shutdown",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/superweapon/superweapon_state.dart",
+      "sha256": "f2148ee2a2d21b2c7a44df025fc54a17ff58a259effc0b3ad155434935965152"
+    },
+    {
+      "path": "test/sc_master/domains/sc258_superweapon_test.dart",
+      "sha256": "b8ae60ad6cc6eeafb590683e837492d9c1799b3af17fcd43ac02069a4a2d0317"
+    }
+  ],
+  "group": "domains",
+  "number": 258,
+  "required_tokens": [],
+  "stage": "SC-258",
+  "title": "Superweapon charging and low-power shutdown"
+}

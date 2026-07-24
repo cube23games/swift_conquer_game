@@ -1,0 +1,107 @@
+name: SwiftConquer SC-213-SC-270 Master Shadow
+
+on:
+  push:
+    branches:
+      - 'validation/auto-agent-shadow/sc213-sc270-master-v1*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  full-shadow-sweep:
+    if: ${{ !contains(github.event.head_commit.message, '[sc-master-generated]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+    steps:
+      - name: Checkout validation branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.35.0
+          cache: true
+
+      - name: Show tool versions
+        run: |
+          flutter --version
+          dart --version
+          python3 --version
+
+      - name: Run non-fail-fast SC-213 through SC-270 sweep
+        id: sweep
+        continue-on-error: true
+        env:
+          PYTHONPATH: .auto-agent/swiftconquer_master
+        run: |
+          python3 .auto-agent/swiftconquer_master/run_shadow_sweep.py \
+            --repo . \
+            --evidence "$RUNNER_TEMP/swiftconquer-master-shadow"
+
+      - name: Commit generated shadow specimen
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "SwiftConquer Shadow Agent"
+          git config user.email "actions@users.noreply.github.com"
+          git add lib test tools master_train .auto-agent .github docs
+          if git diff --cached --quiet; then
+            echo "No generated specimen changes to commit."
+          else
+            git commit -m "SC-213-SC-270: generated master shadow specimen [sc-master-generated]"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+
+      - name: Upload consolidated shadow evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: SWIFTCONQUER_SC213_SC270_MASTER_SHADOW_EVIDENCE
+          path: ${{ runner.temp }}/swiftconquer-master-shadow
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload debug APK when produced
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: SWIFTCONQUER_SC270_SHADOW_DEBUG_APK
+          path: build/app/outputs/flutter-apk/app-debug.apk
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Set final sweep result
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f "$RUNNER_TEMP/swiftconquer-master-shadow/summary.json"
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          path = Path(os.environ["RUNNER_TEMP"]) / "swiftconquer-master-shadow/summary.json"
+          data = json.loads(path.read_text())
+          print(json.dumps({
+              "passed": data["passed"],
+              "stage_count": data["stage_count"],
+              "stage_failure_count": data["stage_failure_count"],
+              "command_failure_count": data["command_failure_count"],
+          }, indent=2))
+          raise SystemExit(0 if data["passed"] else 1)
+          PY

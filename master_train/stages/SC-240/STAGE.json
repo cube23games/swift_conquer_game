@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-240: Base and economy checkpoint smoke",
+  "device_gate": true,
+  "files": [
+    {
+      "path": "lib/sc_master/economy/economy_smoke.dart",
+      "sha256": "574910e8f12a67f41e97a3b05ff118f07d8d31a408f64ea1bffde2f079c34210"
+    },
+    {
+      "path": "test/sc_master/economy/sc240_economy_smoke_test.dart",
+      "sha256": "88bb0a1f92b8756edda16fed65f86d6d6b731b5f38c18c75044596c4ff65d5b8"
+    }
+  ],
+  "group": "economy",
+  "number": 240,
+  "required_tokens": [],
+  "stage": "SC-240",
+  "title": "Base and economy checkpoint smoke"
+}

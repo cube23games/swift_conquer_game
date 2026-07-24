@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-253: Spy technology access and stolen-tech removal policy",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/spy/tech_access.dart",
+      "sha256": "8f12df75825019c6db5bd5f37a945fd3820d85b0f4a6a2973994bc851544abcf"
+    },
+    {
+      "path": "test/sc_master/domains/sc253_spy_access_test.dart",
+      "sha256": "02ce0f269e0256e788358033bc0bd353e390d715f1da6e2cc442d0f2d6edd46b"
+    }
+  ],
+  "group": "domains",
+  "number": 253,
+  "required_tokens": [],
+  "stage": "SC-253",
+  "title": "Spy technology access and stolen-tech removal policy"
+}

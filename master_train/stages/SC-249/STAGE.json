@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-249: Enemy auto-retaliation policy",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/combat/retaliation_policy.dart",
+      "sha256": "79b99f5bc75ec33a10ff39db3fb3b0275b4371f354ead487c12b967f87355f3c"
+    },
+    {
+      "path": "test/sc_master/combat/sc249_retaliation_test.dart",
+      "sha256": "13bb11301cabd6407d5b37144c137a2b9385ff0ebad330b71b8657cda6b52b71"
+    }
+  ],
+  "group": "combat",
+  "number": 249,
+  "required_tokens": [],
+  "stage": "SC-249",
+  "title": "Enemy auto-retaliation policy"
+}

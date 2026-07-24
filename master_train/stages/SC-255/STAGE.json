@@ -1,0 +1,23 @@
+{
+  "commit_message": "SC-255: Aircraft ammo and low-power reload behavior",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/air/air_reload_service.dart",
+      "sha256": "d8e55aaf13ab1dd2726b7899c9a4774a4cda9d35cfaa260529c6ff37e1cbc1ea"
+    },
+    {
+      "path": "lib/sc_master/air/air_unit_state.dart",
+      "sha256": "f68c04dc94d5f0ba8b34d63ceb740b3ba1eec29be51e470d6e116b517e707ef9"
+    },
+    {
+      "path": "test/sc_master/domains/sc255_air_reload_test.dart",
+      "sha256": "fba572acf898c558fd9e497b103da193d2e5aac8e9b68131f5fc24b2d0ae56ba"
+    }
+  ],
+  "group": "domains",
+  "number": 255,
+  "required_tokens": [],
+  "stage": "SC-255",
+  "title": "Aircraft ammo and low-power reload behavior"
+}

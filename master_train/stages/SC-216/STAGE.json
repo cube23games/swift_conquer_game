@@ -1,0 +1,23 @@
+{
+  "commit_message": "SC-216: Entity registry and immutable identity ownership",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/core/entities/entity_record.dart",
+      "sha256": "0428e16a2f339852e2d6c3d7c7bfb3120c62522fe0ebf55691996f6dc91129bf"
+    },
+    {
+      "path": "lib/sc_master/core/entities/entity_store.dart",
+      "sha256": "db75e24990004b5ce9575062576485e6174753821a45b1464283d1bb0c2d1c40"
+    },
+    {
+      "path": "test/sc_master/foundation/sc216_entity_store_test.dart",
+      "sha256": "4127e26ec39d941220fdabfb7c1bca84fd83b39f334845900da85669a7b2ce70"
+    }
+  ],
+  "group": "foundation",
+  "number": 216,
+  "required_tokens": [],
+  "stage": "SC-216",
+  "title": "Entity registry and immutable identity ownership"
+}

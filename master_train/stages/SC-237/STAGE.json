@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-237: Owned-building construction radius rule",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/construction/build_rule.dart",
+      "sha256": "45b2cdb864f9dbe956ad26a9b768a4844fde0b03f02d2d7af230eaa3272d66c6"
+    },
+    {
+      "path": "test/sc_master/economy/sc237_build_rule_test.dart",
+      "sha256": "f25e7c38f8223f128571056c63513bdbd77946b17c7ce1e2319d0ee96ba080ef"
+    }
+  ],
+  "group": "economy",
+  "number": 237,
+  "required_tokens": [],
+  "stage": "SC-237",
+  "title": "Owned-building construction radius rule"
+}
