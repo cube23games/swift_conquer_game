@@ -1,0 +1,23 @@
+{
+  "commit_message": "SC-214: Deterministic clock and seeded random source",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/core/random/deterministic_rng.dart",
+      "sha256": "6b57481c81435acf6cd6f7bafba5ec92bfae7591798231c4db5e560cd600923f"
+    },
+    {
+      "path": "lib/sc_master/core/time/fixed_clock.dart",
+      "sha256": "0c28f61c5fda16882e064e031b1bd8dcb3faa7f41fd3ae8d1a1a3a68fd726861"
+    },
+    {
+      "path": "test/sc_master/foundation/sc214_determinism_test.dart",
+      "sha256": "284f7920f83d3e6138411a876b50c638a73e27f33dbea55d4c507f990d09e798"
+    }
+  ],
+  "group": "foundation",
+  "number": 214,
+  "required_tokens": [],
+  "stage": "SC-214",
+  "title": "Deterministic clock and seeded random source"
+}

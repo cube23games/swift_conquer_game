@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-222: Camera intent separated from simulation state",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/control/camera_intent.dart",
+      "sha256": "e474be1f0809d8d4c02eb97152a7a6bb65e2fe1a1b77f5b88ecf94ac5a4ae464"
+    },
+    {
+      "path": "test/sc_master/controls/sc222_camera_intent_test.dart",
+      "sha256": "30e40e3fc59599523513b8c9d38dd30af9f00889476858f7c8fba2c08b916fd4"
+    }
+  ],
+  "group": "controls",
+  "number": 222,
+  "required_tokens": [],
+  "stage": "SC-222",
+  "title": "Camera intent separated from simulation state"
+}

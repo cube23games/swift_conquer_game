@@ -1,0 +1,20 @@
+{
+  "automatic_tags": false,
+  "dart_line_limit": 160,
+  "device_gates": [
+    "SC-220",
+    "SC-230",
+    "SC-240",
+    "SC-250",
+    "SC-260",
+    "SC-270"
+  ],
+  "expected_base_commit": "dbedc8dd830b380b11e36d9f8e6bf3c8065973c4",
+  "production_branch": "working/phase170-movement-ci",
+  "production_mutation": false,
+  "repository": "cube23games/swift_conquer_game",
+  "schema_version": 1,
+  "validation_branch_prefix": "validation/auto-agent-shadow/sc213-sc270-master-v1",
+  "workflow_file": "swiftconquer-sc213-sc270-master-shadow.yml",
+  "workflow_name": "SwiftConquer SC-213-SC-270 Master Shadow"
+}

@@ -1,0 +1,36 @@
+{
+  "commit_message": "SC-269: Interactive Shadow vertical-slice screen",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/main.dart",
+      "sha256": "52a94ab7eb25c5e2dac4fd153c3ed582905346b580af395586a60035d4ba9ff3"
+    },
+    {
+      "path": "lib/sc_master/ui/sc_master_debug_screen.dart",
+      "sha256": "0f9d45d5191f94b89acc103359ee06a93f1cc982c1e265a2c3d6e0469a52dd5e"
+    },
+    {
+      "path": "lib/sc_master/ui/sc_master_demo_controller.dart",
+      "sha256": "152a30f9d66557fb7387aac7baac69622945d9effff015a6b9c8cadbbf163e58"
+    },
+    {
+      "path": "test/sc_master/final/sc269_debug_screen_test.dart",
+      "sha256": "37fdb229e47697a9314f68176c5e19ac96b2d7d962d8e34b35e3a11507d6bf21"
+    }
+  ],
+  "group": "final",
+  "number": 269,
+  "required_tokens": [
+    {
+      "path": "lib/main.dart",
+      "value": "SC_MASTER_SLICE"
+    },
+    {
+      "path": "lib/sc_master/ui/sc_master_debug_screen.dart",
+      "value": "SwiftConquer Master Shadow Slice"
+    }
+  ],
+  "stage": "SC-269",
+  "title": "Interactive Shadow vertical-slice screen"
+}

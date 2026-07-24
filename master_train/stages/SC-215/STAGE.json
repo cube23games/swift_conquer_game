@@ -1,0 +1,23 @@
+{
+  "commit_message": "SC-215: Command queue and validation boundary",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/core/commands/command_queue.dart",
+      "sha256": "f379f2dcc9c83eb25096bffad44718154c07376548311449e99e2e93d8d1d335"
+    },
+    {
+      "path": "lib/sc_master/core/commands/command_validation.dart",
+      "sha256": "fa4515ed5879358bd0a92b7cd506eb4b3ce081573cc6aebd9283e0a3457366a1"
+    },
+    {
+      "path": "test/sc_master/foundation/sc215_command_queue_test.dart",
+      "sha256": "5b923329edf42f0744307b3ea2fff833ab31578551a58dc7dcc2a966ca5bbebc"
+    }
+  ],
+  "group": "foundation",
+  "number": 215,
+  "required_tokens": [],
+  "stage": "SC-215",
+  "title": "Command queue and validation boundary"
+}

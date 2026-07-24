@@ -1,0 +1,23 @@
+{
+  "commit_message": "SC-217: Ordered simulation system pipeline",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/core/systems/game_system.dart",
+      "sha256": "5cb577265fe7a571200997ad9d035e8e18857722c63043a92c24321b6bf38712"
+    },
+    {
+      "path": "lib/sc_master/core/systems/system_pipeline.dart",
+      "sha256": "bff91f5f630921e977823e1c8a266711665007b633d99a8e2f7d61dedf53d905"
+    },
+    {
+      "path": "test/sc_master/foundation/sc217_system_pipeline_test.dart",
+      "sha256": "3691a2947b9dd57fcb0ed24be10f3a23a3fe8221f0f3fac04a42f30fc8829c48"
+    }
+  ],
+  "group": "foundation",
+  "number": 217,
+  "required_tokens": [],
+  "stage": "SC-217",
+  "title": "Ordered simulation system pipeline"
+}

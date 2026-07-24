@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-247: Low-power penalties for production, engineers, aircraft, and superweapons",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/power/power_penalties.dart",
+      "sha256": "0680ce98ae8760a04fd9335e491ff3680383c3e1dc5a03a7b7cf0dcaa71129f5"
+    },
+    {
+      "path": "test/sc_master/combat/sc247_power_penalties_test.dart",
+      "sha256": "029b68bf0e3feb8f0dc61fd60806a36019c11072f67d810e55cb7bba76fbcac0"
+    }
+  ],
+  "group": "combat",
+  "number": 247,
+  "required_tokens": [],
+  "stage": "SC-247",
+  "title": "Low-power penalties for production, engineers, aircraft, and superweapons"
+}

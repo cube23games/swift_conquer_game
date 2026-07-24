@@ -1,0 +1,36 @@
+{
+  "commit_message": "SC-251: Data-driven six-slot faction catalog without invented canon",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/factions/faction_catalog.dart",
+      "sha256": "8e127e3870a4ce5c904ffb266d9bf34725e1bf2b27a48aa6b83bb8557d5e2e11"
+    },
+    {
+      "path": "lib/sc_master/factions/faction_definition.dart",
+      "sha256": "e7c492e027317f352cc5ca144635179b864e2c86c5eab1c6c98146b872ff6251"
+    },
+    {
+      "path": "lib/sc_master/factions/faction_id.dart",
+      "sha256": "2311a96df16137853758b655d53e0a4aee2fc7fdb51631305e1dad26902552e3"
+    },
+    {
+      "path": "test/sc_master/domains/sc251_faction_catalog_test.dart",
+      "sha256": "bf5af4f9957a5d2cf54d13575eefcb1e1c1c87bc2238565f534b8bd56725bb2c"
+    }
+  ],
+  "group": "domains",
+  "number": 251,
+  "required_tokens": [
+    {
+      "path": "lib/sc_master/factions/faction_catalog.dart",
+      "value": "Faction Slot 6"
+    },
+    {
+      "path": "lib/sc_master/factions/faction_definition.dart",
+      "value": "canonicalDataPending"
+    }
+  ],
+  "stage": "SC-251",
+  "title": "Data-driven six-slot faction catalog without invented canon"
+}

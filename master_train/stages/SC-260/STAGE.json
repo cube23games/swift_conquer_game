@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-260: Mixed land, air, and naval checkpoint smoke",
+  "device_gate": true,
+  "files": [
+    {
+      "path": "lib/sc_master/domains/mixed_domain_smoke.dart",
+      "sha256": "d6bd6ea0ee25f99ebe7d1ce6f113ec48a88a218360a5cda3dd3ed624d6f823e6"
+    },
+    {
+      "path": "test/sc_master/domains/sc260_mixed_domain_smoke_test.dart",
+      "sha256": "e2f950a905b1ab1836664d7cef6cb79297a9118255ddac19769a4f33719ac9fd"
+    }
+  ],
+  "group": "domains",
+  "number": 260,
+  "required_tokens": [],
+  "stage": "SC-260",
+  "title": "Mixed land, air, and naval checkpoint smoke"
+}

@@ -1,0 +1,23 @@
+{
+  "commit_message": "SC-265: Match rules, timer, and sudden-death state",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/match/match_rules.dart",
+      "sha256": "1082933d05be72cbcf30073b4ff48d13ae032ae19785d73f0c758b373394a512"
+    },
+    {
+      "path": "lib/sc_master/match/storm_ring.dart",
+      "sha256": "537da77c8ecc381104fa43df9a3da75270d0b1ace3373570b030b0f25772966a"
+    },
+    {
+      "path": "test/sc_master/final/sc265_match_rules_test.dart",
+      "sha256": "8d3a5df324a7fd298840b9ca7c4088e4d64009cf2a0bc33b397b7fc09ee99a9a"
+    }
+  ],
+  "group": "final",
+  "number": 265,
+  "required_tokens": [],
+  "stage": "SC-265",
+  "title": "Match rules, timer, and sudden-death state"
+}
