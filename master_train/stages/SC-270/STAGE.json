@@ -1,0 +1,24 @@
+{
+  "commit_message": "SC-270: Final integrated vertical-slice smoke and device gate",
+  "device_gate": true,
+  "files": [
+    {
+      "path": "lib/sc_master/final/final_smoke.dart",
+      "sha256": "2934da65a2a2dc11b240e21bb93c5b4f739b5adf91e002bd9c8edd747c4415a6"
+    },
+    {
+      "path": "test/sc_master/final/sc270_final_smoke_test.dart",
+      "sha256": "b1d63d6b63e11f09aa71d51d734c717bdaa9df10fdce1ab2d38db95020bef8f7"
+    }
+  ],
+  "group": "final",
+  "number": 270,
+  "required_tokens": [
+    {
+      "path": "lib/sc_master/final/final_smoke.dart",
+      "value": "bool get passed"
+    }
+  ],
+  "stage": "SC-270",
+  "title": "Final integrated vertical-slice smoke and device gate"
+}

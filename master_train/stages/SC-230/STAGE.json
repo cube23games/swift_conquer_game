@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-230: Controls and movement checkpoint smoke",
+  "device_gate": true,
+  "files": [
+    {
+      "path": "lib/sc_master/control/control_smoke.dart",
+      "sha256": "ebedbbcc2ff7b68d66e91a66e462d5cff8ff62ef2cfa59143527bd4eab01f66f"
+    },
+    {
+      "path": "test/sc_master/controls/sc230_control_smoke_test.dart",
+      "sha256": "c77779f958be795c9fdc9b3b72dbe6a0455d7c1759930d0df95d0f00b5747a59"
+    }
+  ],
+  "group": "controls",
+  "number": 230,
+  "required_tokens": [],
+  "stage": "SC-230",
+  "title": "Controls and movement checkpoint smoke"
+}

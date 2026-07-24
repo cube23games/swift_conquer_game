@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-225: Grid navigation and deterministic path finding",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/navigation/grid_pathfinder.dart",
+      "sha256": "9018005bc4057afb2ebf71544f1e184c90649dbee3f01ef0e6bec7d00ffb49ff"
+    },
+    {
+      "path": "test/sc_master/controls/sc225_pathfinder_test.dart",
+      "sha256": "e6374970a39890a1e1c28f9ff943c1a793d3e41ddc98f0643ab8682212ab5afa"
+    }
+  ],
+  "group": "controls",
+  "number": 225,
+  "required_tokens": [],
+  "stage": "SC-225",
+  "title": "Grid navigation and deterministic path finding"
+}

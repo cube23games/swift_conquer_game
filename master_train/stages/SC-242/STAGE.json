@@ -1,0 +1,23 @@
+{
+  "commit_message": "SC-242: Armor and weapon specifications",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/combat/armor_profile.dart",
+      "sha256": "5775c163f3f96b394bae178bacd03ea264fb121b6fd7d2cb7ea56ebd54387cc4"
+    },
+    {
+      "path": "lib/sc_master/combat/weapon_spec.dart",
+      "sha256": "14cabd4e2d7e50690cbbe1cf98b7d06484ab7d489715b7acc316589611fae85f"
+    },
+    {
+      "path": "test/sc_master/combat/sc242_armor_weapon_test.dart",
+      "sha256": "08f1e77ce09f207b2a4b0151ea42504ee0e0ce186cc3196f2b59774f6ce7e724"
+    }
+  ],
+  "group": "combat",
+  "number": 242,
+  "required_tokens": [],
+  "stage": "SC-242",
+  "title": "Armor and weapon specifications"
+}

@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-245: Engineer repair service with three-engineer cap",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/engineer/repair_service.dart",
+      "sha256": "0fd7175a0a3a8cb2484449762f54dc2bde5fd6c92d2416c2653c5526b529745d"
+    },
+    {
+      "path": "test/sc_master/combat/sc245_engineer_repair_test.dart",
+      "sha256": "dca0b92ecefbd447485054b72b932423d9463b798d921c25f2083db0fcf1eb23"
+    }
+  ],
+  "group": "combat",
+  "number": 245,
+  "required_tokens": [],
+  "stage": "SC-245",
+  "title": "Engineer repair service with three-engineer cap"
+}

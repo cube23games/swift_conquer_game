@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-261: Deterministic AI perception snapshot",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/ai/ai_perception.dart",
+      "sha256": "6c7c5778703910ac4685b44a4a2b23f23d0f7fe45a74ee09d3158e3919d5125b"
+    },
+    {
+      "path": "test/sc_master/final/sc261_ai_perception_test.dart",
+      "sha256": "6c63e91381372a34e03221b3a2d2ed202b1170bce01745141d72107445c220f8"
+    }
+  ],
+  "group": "final",
+  "number": 261,
+  "required_tokens": [],
+  "stage": "SC-261",
+  "title": "Deterministic AI perception snapshot"
+}

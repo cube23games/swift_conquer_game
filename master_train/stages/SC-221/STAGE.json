@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-221: Deterministic multi-selection state",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/control/selection_state.dart",
+      "sha256": "244da99643f6948bd7416da56d13991feff6273f8d162ab3099be019ec94439c"
+    },
+    {
+      "path": "test/sc_master/controls/sc221_selection_test.dart",
+      "sha256": "3c1ffec004b2bf3d0b8fe997509bbda70c81f264779f512280e0c90e056008b1"
+    }
+  ],
+  "group": "controls",
+  "number": 221,
+  "required_tokens": [],
+  "stage": "SC-221",
+  "title": "Deterministic multi-selection state"
+}

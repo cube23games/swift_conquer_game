@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-266: Victory conditions and surviving-team evaluation",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/match/victory_condition.dart",
+      "sha256": "6371a427a5d93d0b948a2d29360971d14554c888cf5046b069cd060e10c0ef51"
+    },
+    {
+      "path": "test/sc_master/final/sc266_victory_test.dart",
+      "sha256": "ccb6f3b6ef6737a96eb4a01227c003448e37ae7f41f7c6028b84b0d6243889d2"
+    }
+  ],
+  "group": "final",
+  "number": 266,
+  "required_tokens": [],
+  "stage": "SC-266",
+  "title": "Victory conditions and surviving-team evaluation"
+}

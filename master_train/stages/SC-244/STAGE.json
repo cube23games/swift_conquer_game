@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-244: Authoritative combat resolver",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/combat/combat_resolver.dart",
+      "sha256": "03af00f7c358a590a29caec73caebe86d7e68b6ad1e0067c8cab8aeb6fc76195"
+    },
+    {
+      "path": "test/sc_master/combat/sc244_combat_resolver_test.dart",
+      "sha256": "68659e47c42d2e0c5a5f52a1e4fb6181a1c13c32465648947844f3f09b7e2b53"
+    }
+  ],
+  "group": "combat",
+  "number": 244,
+  "required_tokens": [],
+  "stage": "SC-244",
+  "title": "Authoritative combat resolver"
+}

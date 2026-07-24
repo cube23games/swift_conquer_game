@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-224: Deterministic mobile formation planner",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/control/formation_planner.dart",
+      "sha256": "e55eabfdf41be6cc3004e52e8decdd36f930d7885e9b19aad0e6d563c351dd3a"
+    },
+    {
+      "path": "test/sc_master/controls/sc224_formation_test.dart",
+      "sha256": "1b13fc03196242b0f9898d7e6ee8d4374e7e69046788dec773bdd0ba27a191d0"
+    }
+  ],
+  "group": "controls",
+  "number": 224,
+  "required_tokens": [],
+  "stage": "SC-224",
+  "title": "Deterministic mobile formation planner"
+}

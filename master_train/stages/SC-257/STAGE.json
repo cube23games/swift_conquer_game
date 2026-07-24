@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-257: Transport and amphibious payload state",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/transport/transport_state.dart",
+      "sha256": "bd155377309ac06aabb83dcbcdb41c66dd09bf097bfe8992c48baeb8f36f40db"
+    },
+    {
+      "path": "test/sc_master/domains/sc257_transport_test.dart",
+      "sha256": "0c6f5c7b8f1bfc08d336d5fee9a9980872983b0468c8346eb9e3355f778961ea"
+    }
+  ],
+  "group": "domains",
+  "number": 257,
+  "required_tokens": [],
+  "stage": "SC-257",
+  "title": "Transport and amphibious payload state"
+}

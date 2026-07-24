@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-236: Power grid production and demand accounting",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/power/power_grid.dart",
+      "sha256": "edbb5f6c18ccc210079345d2af1d8aa7843d2f70681c033be65c7ff47c62d942"
+    },
+    {
+      "path": "test/sc_master/economy/sc236_power_grid_test.dart",
+      "sha256": "32e5c77bd50b8271cc216a0174cd3a8cc1f933d58c0a1bc5ddb991e542f73e32"
+    }
+  ],
+  "group": "economy",
+  "number": 236,
+  "required_tokens": [],
+  "stage": "SC-236",
+  "title": "Power grid production and demand accounting"
+}

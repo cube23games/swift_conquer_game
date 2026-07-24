@@ -1,0 +1,23 @@
+{
+  "commit_message": "SC-252: Technology graph and unlock prerequisites",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/tech/tech_node.dart",
+      "sha256": "3cc0faddf4b30248e9e6a245e00e4ef9c6b99aac82cfdafe5027e1f79642fec6"
+    },
+    {
+      "path": "lib/sc_master/tech/tech_tree.dart",
+      "sha256": "b82d7bd994cde38bb64b42ba050ccb0186c45961d52c8262c9c530a5037752c7"
+    },
+    {
+      "path": "test/sc_master/domains/sc252_tech_tree_test.dart",
+      "sha256": "df804dcaa338b1ba70aae0d794b3b2c8c0f969b38625e5d8b4d623e0885cea81"
+    }
+  ],
+  "group": "domains",
+  "number": 252,
+  "required_tokens": [],
+  "stage": "SC-252",
+  "title": "Technology graph and unlock prerequisites"
+}

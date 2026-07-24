@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-233: Harvester cargo and collection cycle",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/economy/harvester_state.dart",
+      "sha256": "2769959f5bdc4258d8d1cab576c172ae56450cb5f15231623307fe414582f4f4"
+    },
+    {
+      "path": "test/sc_master/economy/sc233_harvester_test.dart",
+      "sha256": "846cd3ad71b82ede6889db6b44442a42d347857e50fdb1a4534be13a73d1a809"
+    }
+  ],
+  "group": "economy",
+  "number": 233,
+  "required_tokens": [],
+  "stage": "SC-233",
+  "title": "Harvester cargo and collection cycle"
+}

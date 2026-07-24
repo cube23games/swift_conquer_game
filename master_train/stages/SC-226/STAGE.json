@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-226: Occupancy grid and movement collision reservations",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/navigation/occupancy_grid.dart",
+      "sha256": "ae67ddfe311b507a7ce6b31983d27fc49a12d1f6ccd077d28f6f5e9e2e6d7b56"
+    },
+    {
+      "path": "test/sc_master/controls/sc226_occupancy_test.dart",
+      "sha256": "3886c15069c6308f228342d9e76e6ceff3b34f928c2163c397db3b9429dc2d83"
+    }
+  ],
+  "group": "controls",
+  "number": 226,
+  "required_tokens": [],
+  "stage": "SC-226",
+  "title": "Occupancy grid and movement collision reservations"
+}

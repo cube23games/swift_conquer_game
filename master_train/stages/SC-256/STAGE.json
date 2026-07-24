@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-256: Naval movement and water-domain state",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/naval/naval_unit_state.dart",
+      "sha256": "9c2d2bb8ec5beaf5fac13a2f5a07a886ecdd5467faff12814e1a69786626aa59"
+    },
+    {
+      "path": "test/sc_master/domains/sc256_naval_state_test.dart",
+      "sha256": "0aefd39875026544167560e34e8a2469b37bb4e08b602109a90fd19cb9b54aa3"
+    }
+  ],
+  "group": "domains",
+  "number": 256,
+  "required_tokens": [],
+  "stage": "SC-256",
+  "title": "Naval movement and water-domain state"
+}

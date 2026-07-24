@@ -1,0 +1,23 @@
+{
+  "commit_message": "SC-254: Generic land-unit archetype catalog",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/units/land_catalog.dart",
+      "sha256": "596855097795bac26b3ec0505eec9db6436a06243d98da365557f349dbde27e0"
+    },
+    {
+      "path": "lib/sc_master/units/unit_archetype.dart",
+      "sha256": "af97693054ae6a33f7e71ef39a84ea311047de208940e730ebfff91fcb156656"
+    },
+    {
+      "path": "test/sc_master/domains/sc254_land_catalog_test.dart",
+      "sha256": "725cf971f4266187e0b1cb66c63f78ccda8b581ed9be0714d526e99f895ce595"
+    }
+  ],
+  "group": "domains",
+  "number": 254,
+  "required_tokens": [],
+  "stage": "SC-254",
+  "title": "Generic land-unit archetype catalog"
+}

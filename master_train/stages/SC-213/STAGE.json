@@ -1,0 +1,36 @@
+{
+  "commit_message": "SC-213: Canonical value types and command contract",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/core/commands/game_command.dart",
+      "sha256": "95961d9985e90ed52c942fcf92e7d3f66ab984660fcdca31bdc60c582dd40f43"
+    },
+    {
+      "path": "lib/sc_master/core/id/entity_id.dart",
+      "sha256": "f583ae8ad560fce7cf0c7b28f8e00d578212d1b860a939e2adf4d639b0137e58"
+    },
+    {
+      "path": "lib/sc_master/core/math/vec2.dart",
+      "sha256": "1f0618f10a4477d93601e8b7e868a34e38bd3656700da980fa5673cb3b8fc95e"
+    },
+    {
+      "path": "test/sc_master/foundation/sc213_value_types_test.dart",
+      "sha256": "a63f15039e5c64c17adb9dc03e42667ce7274f291be0eaaf172107cc0f498fff"
+    }
+  ],
+  "group": "foundation",
+  "number": 213,
+  "required_tokens": [
+    {
+      "path": "lib/sc_master/core/id/entity_id.dart",
+      "value": "final class EntityId"
+    },
+    {
+      "path": "lib/sc_master/core/commands/game_command.dart",
+      "value": "abstract interface class GameCommand"
+    }
+  ],
+  "stage": "SC-213",
+  "title": "Canonical value types and command contract"
+}

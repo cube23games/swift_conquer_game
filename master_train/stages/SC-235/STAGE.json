@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-235: Silo overflow storage limits",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/economy/silo_storage.dart",
+      "sha256": "7e8c28a84be62c32696659e683381e53c6dd6b2eead9d84447eb8c261bdb9be3"
+    },
+    {
+      "path": "test/sc_master/economy/sc235_silo_test.dart",
+      "sha256": "80341e059fa41572d65f5c0b695862106e2bf4518507ccb166332512cbff2981"
+    }
+  ],
+  "group": "economy",
+  "number": 235,
+  "required_tokens": [],
+  "stage": "SC-235",
+  "title": "Silo overflow storage limits"
+}

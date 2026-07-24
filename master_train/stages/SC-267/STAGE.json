@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-267: Integrity monitor and anti-cheat response policy",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/integrity/integrity_monitor.dart",
+      "sha256": "40ffa7ed958fb5ca1f056774700c3e882e7278fe226845acaf2bec44f8d073f1"
+    },
+    {
+      "path": "test/sc_master/final/sc267_integrity_monitor_test.dart",
+      "sha256": "cb255076a1a0a8bfd37d3d605e3e6d4ddd94ac770ad13d4bc0afb095558efb37"
+    }
+  ],
+  "group": "final",
+  "number": 267,
+  "required_tokens": [],
+  "stage": "SC-267",
+  "title": "Integrity monitor and anti-cheat response policy"
+}

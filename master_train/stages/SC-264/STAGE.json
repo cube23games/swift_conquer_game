@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-264: Seeded AI decision scheduler",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/ai/deterministic_ai.dart",
+      "sha256": "1e0fd64c209c64b538ab2c9f4f2ad644e24a2af6de3d12219916c54ad126f302"
+    },
+    {
+      "path": "test/sc_master/final/sc264_deterministic_ai_test.dart",
+      "sha256": "35ac4e53ca47d817e2f6e556d55163daa18d525cda88c0a70476517b98efd34f"
+    }
+  ],
+  "group": "final",
+  "number": 264,
+  "required_tokens": [],
+  "stage": "SC-264",
+  "title": "Seeded AI decision scheduler"
+}

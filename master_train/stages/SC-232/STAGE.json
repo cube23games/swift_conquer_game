@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-232: Ore field depletion model",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/economy/ore_field.dart",
+      "sha256": "0534c4eb3a7daaf35de72969cee2aa8ec73bf26f660aa93fb7ef4ab4c4efa614"
+    },
+    {
+      "path": "test/sc_master/economy/sc232_ore_field_test.dart",
+      "sha256": "cdf0a556e2fc4622733c8768609db9d3d031b2d9e2c93d49da39027db2b3aade"
+    }
+  ],
+  "group": "economy",
+  "number": 232,
+  "required_tokens": [],
+  "stage": "SC-232",
+  "title": "Ore field depletion model"
+}
