@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-268: Replay verification against authoritative hashes",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/core/replay/replay_verifier.dart",
+      "sha256": "85b83057830d545ce4dd3b1c4dcf3178d0f0f0dee0f876ccc6e769048685e778"
+    },
+    {
+      "path": "test/sc_master/final/sc268_replay_verifier_test.dart",
+      "sha256": "79fc8a5a456c664e5708e873308d73c659558330ccf1749b3dcd3a4a588d0e9f"
+    }
+  ],
+  "group": "final",
+  "number": 268,
+  "required_tokens": [],
+  "stage": "SC-268",
+  "title": "Replay verification against authoritative hashes"
+}
