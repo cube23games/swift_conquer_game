@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ContextAction {
-  const ContextAction({
+class CommandBarAction {
+  const CommandBarAction({
     required this.label,
     required this.onPressed,
     this.primary = false,
@@ -20,7 +20,7 @@ class ContextCommandBar extends StatelessWidget {
   });
 
   final int selectionCount;
-  final List<ContextAction> actions;
+  final List<CommandBarAction> actions;
 
   @override
   Widget build(BuildContext context) {
@@ -41,14 +41,17 @@ class ContextCommandBar extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: Text(
-                  selectionCount == 0 ? 'No selection' : '$selectionCount selected',
+                  selectionCount == 0
+                      ? 'No selection'
+                      : '$selectionCount selected',
                   style: const TextStyle(color: Colors.white70),
                 ),
               ),
               const VerticalDivider(width: 1),
               Expanded(
                 child: ListView.separated(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                   scrollDirection: Axis.horizontal,
                   itemCount: actions.length,
                   separatorBuilder: (_, __) => const SizedBox(width: 8),

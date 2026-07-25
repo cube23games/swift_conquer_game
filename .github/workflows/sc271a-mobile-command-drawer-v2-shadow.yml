@@ -1,0 +1,125 @@
+name: SwiftConquer SC-271A Mobile Command Drawer Shadow v2
+
+on:
+  push:
+    branches:
+      - 'validation/sc271a-mobile-command-drawer-v2*'
+
+permissions:
+  contents: read
+
+jobs:
+  sc271a-v2-shadow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+    steps:
+      - name: Checkout SC-271A v2 validation branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify exact failed-v1 parent
+        run: |
+          test "$(git rev-parse HEAD^)" = \
+            "b3cec72c14a13118482ed857765ce9406277485f"
+
+      - name: Verify production remains locked
+        run: |
+          git fetch origin working/phase170-movement-ci
+          test "$(git rev-parse origin/working/phase170-movement-ci)" = \
+            "dbedc8dd830b380b11e36d9f8e6bf3c8065973c4"
+
+      - name: Verify focused SC-271A v2 source contract
+        run: python3 tools/verify_sc271a_v2.py
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.35.0
+          cache: true
+
+      - name: Resolve dependencies
+        run: flutter pub get
+
+      - name: Run short-landscape drawer and HUD tests
+        run: |
+          flutter test test/features/command_drawer
+          flutter test test/features/hud
+
+      - name: Analyze SC-271A files
+        run: |
+          flutter analyze --no-fatal-infos --no-fatal-warnings \
+            lib/features/command_drawer \
+            lib/features/hud \
+            lib/screens/game_screen.dart \
+            test/features/command_drawer \
+            test/features/hud
+
+      - name: Run complete test suite
+        run: flutter test
+
+      - name: Prepare compatible Android shell
+        run: |
+          rm -rf android
+          flutter create . --platforms=android \
+            --project-name swift_conquer_game \
+            --org com.swiftconquer
+
+      - name: Build SC-271A v2 device APK
+        run: |
+          flutter build apk --debug
+          cp build/app/outputs/flutter-apk/app-debug.apk \
+            build/app/outputs/flutter-apk/swiftconquer-sc271a-v2-drawer-debug.apk
+
+      - name: Seal evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p sc271a_v2_evidence
+          git log -1 --format='%H  %s' > sc271a_v2_evidence/COMMIT.txt
+          printf '%s\n' \
+            'Run 30159924087 root cause: Flutter/SwiftConquer ContextAction name collision.' \
+            'Repair: SwiftConquer model renamed to CommandBarAction.' \
+            > sc271a_v2_evidence/REPAIR.txt
+          sha256sum \
+            build/app/outputs/flutter-apk/swiftconquer-sc271a-v2-drawer-debug.apk \
+            > sc271a_v2_evidence/APK_SHA256SUMS.txt
+          cat > sc271a_v2_evidence/DEVICE_GATE.md <<'EOF'
+          # SC-271A v2 physical-device gate
+          - No RenderFlex overflow warning
+          - Drawer opens and closes from right-edge handle
+          - Drawer overlays battlefield instead of shrinking it
+          - Structures grid exposes War Factory
+          - All four tabs switch
+          - Locked requirements remain visible
+          - Bottom command bar remains one horizontal row
+          - Two-finger pan and pinch zoom work together
+          - Drawer touches never issue battlefield commands
+          - Production branch remains untouched
+          EOF
+          sha256sum sc271a_v2_evidence/* \
+            > sc271a_v2_evidence/SHA256SUMS.txt
+
+      - name: Upload SC-271A v2 evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: SWIFTCONQUER_SC271A_V2_COMMAND_DRAWER_EVIDENCE
+          path: sc271a_v2_evidence
+          retention-days: 30
+
+      - name: Upload SC-271A v2 APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: SWIFTCONQUER_SC271A_V2_COMMAND_DRAWER_DEBUG_APK
+          path: build/app/outputs/flutter-apk/swiftconquer-sc271a-v2-drawer-debug.apk
+          retention-days: 14

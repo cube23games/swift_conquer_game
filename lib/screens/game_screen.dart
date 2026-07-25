@@ -641,36 +641,36 @@ class _GameScreenState extends State<GameScreen> {
 
 
   Widget _buildBottomBar() {
-    final actions = <ContextAction>[];
+    final actions = <CommandBarAction>[];
     if (_singleSelectedMobileHq() != null) {
-      actions.add(ContextAction(
+      actions.add(CommandBarAction(
         label: 'Deploy HQ',
         onPressed: _deploySelectedMobileHq,
         primary: true,
       ));
     }
     if (_singleSelectedBuildingOfType(BuildingType.barracks) != null) {
-      actions.add(ContextAction(
+      actions.add(CommandBarAction(
         label: 'Produce Infantry',
         onPressed: _produceInfantry,
         primary: true,
       ));
     }
     if (_singleSelectedBuildingOfType(BuildingType.refinery) != null) {
-      actions.add(ContextAction(
+      actions.add(CommandBarAction(
         label: 'Produce Harvester',
         onPressed: _produceHarvester,
         primary: true,
       ));
     }
     if (_singleSelectedBuildingOfType(BuildingType.warFactory) != null) {
-      actions.add(ContextAction(
+      actions.add(CommandBarAction(
         label: 'Produce Tank',
         onPressed: _produceTank,
         primary: true,
       ));
     }
-    actions.add(ContextAction(
+    actions.add(CommandBarAction(
       label: 'Clear',
       onPressed: () {
         setState(() {
@@ -680,7 +680,7 @@ class _GameScreenState extends State<GameScreen> {
         });
       },
     ));
-    actions.add(ContextAction(
+    actions.add(CommandBarAction(
       label: 'Commands',
       onPressed: () => setState(() => _commandDrawerOpen = true),
     ));

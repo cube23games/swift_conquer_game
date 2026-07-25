@@ -16,7 +16,7 @@ void main() {
             selectionCount: 3,
             actions: [
               for (final label in ['Deploy', 'Stop', 'Guard', 'Clear', 'More'])
-                ContextAction(label: label, onPressed: () {}),
+                CommandBarAction(label: label, onPressed: () {}),
             ],
           ),
         ),
