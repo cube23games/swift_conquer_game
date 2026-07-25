@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-234: Refinery deposit service",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/economy/refinery_service.dart",
+      "sha256": "d38d08a95334db346d90e0374f5fcbc885c4bcbf198ed6e4400253ef115c3b3c"
+    },
+    {
+      "path": "test/sc_master/economy/sc234_refinery_test.dart",
+      "sha256": "068658f46d46bbe35857cb152861d630c97d5de766ce956efd761fdfa0c589ef"
+    }
+  ],
+  "group": "economy",
+  "number": 234,
+  "required_tokens": [],
+  "stage": "SC-234",
+  "title": "Refinery deposit service"
+}
