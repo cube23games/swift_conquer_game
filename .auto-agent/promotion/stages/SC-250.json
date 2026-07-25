@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-250: Combat and engineer checkpoint smoke",
+  "device_gate": true,
+  "files": [
+    {
+      "path": "lib/sc_master/combat/combat_smoke.dart",
+      "sha256": "d8746e0158c95f82c3d987a151c3f595a1c9e9846942db2481f5139cbdd4302f"
+    },
+    {
+      "path": "test/sc_master/combat/sc250_combat_smoke_test.dart",
+      "sha256": "e3906a136b821842d4d4c317b30b778ebe47b2b4c6aa04afc4f73e840cbb5bab"
+    }
+  ],
+  "group": "combat",
+  "number": 250,
+  "required_tokens": [],
+  "stage": "SC-250",
+  "title": "Combat and engineer checkpoint smoke"
+}
