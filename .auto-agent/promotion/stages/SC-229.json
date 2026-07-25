@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-229: Mobile input adapter emits intents instead of mutating world",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/control/mobile_input_adapter.dart",
+      "sha256": "71abf9e6dc2e4b7ab0a81457d37510af6bf76d7da3925be2a685360760f6efff"
+    },
+    {
+      "path": "test/sc_master/controls/sc229_mobile_adapter_test.dart",
+      "sha256": "012d312154b96d7234223b186771fe8c6ea89f446566cba7f9207d708c848e42"
+    }
+  ],
+  "group": "controls",
+  "number": 229,
+  "required_tokens": [],
+  "stage": "SC-229",
+  "title": "Mobile input adapter emits intents instead of mutating world"
+}
