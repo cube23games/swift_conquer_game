@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-228: Stable target acquisition policy",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/combat/target_selector.dart",
+      "sha256": "646fc1d4a9dc8dc1dfe1255f7b8699d7a3c6be893d3090ffb4c4bb1e76a60023"
+    },
+    {
+      "path": "test/sc_master/controls/sc228_target_selector_test.dart",
+      "sha256": "4a0bcb8aa557cc5a740bea89b6affa78a707993680e250c46b8c33e2580b42a5"
+    }
+  ],
+  "group": "controls",
+  "number": 228,
+  "required_tokens": [],
+  "stage": "SC-228",
+  "title": "Stable target acquisition policy"
+}
