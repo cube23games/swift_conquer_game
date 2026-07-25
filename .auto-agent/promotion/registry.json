@@ -1,0 +1,471 @@
+{
+  "expected_base_commit": "dbedc8dd830b380b11e36d9f8e6bf3c8065973c4",
+  "schema_version": 1,
+  "stages": [
+    {
+      "device_gate": false,
+      "file_count": 4,
+      "group": "foundation",
+      "number": 213,
+      "stage": "SC-213",
+      "title": "Canonical value types and command contract"
+    },
+    {
+      "device_gate": false,
+      "file_count": 3,
+      "group": "foundation",
+      "number": 214,
+      "stage": "SC-214",
+      "title": "Deterministic clock and seeded random source"
+    },
+    {
+      "device_gate": false,
+      "file_count": 3,
+      "group": "foundation",
+      "number": 215,
+      "stage": "SC-215",
+      "title": "Command queue and validation boundary"
+    },
+    {
+      "device_gate": false,
+      "file_count": 3,
+      "group": "foundation",
+      "number": 216,
+      "stage": "SC-216",
+      "title": "Entity registry and immutable identity ownership"
+    },
+    {
+      "device_gate": false,
+      "file_count": 3,
+      "group": "foundation",
+      "number": 217,
+      "stage": "SC-217",
+      "title": "Ordered simulation system pipeline"
+    },
+    {
+      "device_gate": false,
+      "file_count": 4,
+      "group": "foundation",
+      "number": 218,
+      "stage": "SC-218",
+      "title": "Replay journal and deterministic state hashing"
+    },
+    {
+      "device_gate": false,
+      "file_count": 4,
+      "group": "foundation",
+      "number": 219,
+      "stage": "SC-219",
+      "title": "Map grid, spawns, blocked cells, and resources"
+    },
+    {
+      "device_gate": true,
+      "file_count": 6,
+      "group": "foundation",
+      "number": 220,
+      "stage": "SC-220",
+      "title": "Headless world foundation and first device-gate smoke"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "controls",
+      "number": 221,
+      "stage": "SC-221",
+      "title": "Deterministic multi-selection state"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "controls",
+      "number": 222,
+      "stage": "SC-222",
+      "title": "Camera intent separated from simulation state"
+    },
+    {
+      "device_gate": false,
+      "file_count": 3,
+      "group": "controls",
+      "number": 223,
+      "stage": "SC-223",
+      "title": "Move command and authoritative order application"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "controls",
+      "number": 224,
+      "stage": "SC-224",
+      "title": "Deterministic mobile formation planner"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "controls",
+      "number": 225,
+      "stage": "SC-225",
+      "title": "Grid navigation and deterministic path finding"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "controls",
+      "number": 226,
+      "stage": "SC-226",
+      "title": "Occupancy grid and movement collision reservations"
+    },
+    {
+      "device_gate": false,
+      "file_count": 3,
+      "group": "controls",
+      "number": 227,
+      "stage": "SC-227",
+      "title": "Attack command contract and ownership checks"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "controls",
+      "number": 228,
+      "stage": "SC-228",
+      "title": "Stable target acquisition policy"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "controls",
+      "number": 229,
+      "stage": "SC-229",
+      "title": "Mobile input adapter emits intents instead of mutating world"
+    },
+    {
+      "device_gate": true,
+      "file_count": 2,
+      "group": "controls",
+      "number": 230,
+      "stage": "SC-230",
+      "title": "Controls and movement checkpoint smoke"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "economy",
+      "number": 231,
+      "stage": "SC-231",
+      "title": "Team wallet and configurable starting funds"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "economy",
+      "number": 232,
+      "stage": "SC-232",
+      "title": "Ore field depletion model"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "economy",
+      "number": 233,
+      "stage": "SC-233",
+      "title": "Harvester cargo and collection cycle"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "economy",
+      "number": 234,
+      "stage": "SC-234",
+      "title": "Refinery deposit service"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "economy",
+      "number": 235,
+      "stage": "SC-235",
+      "title": "Silo overflow storage limits"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "economy",
+      "number": 236,
+      "stage": "SC-236",
+      "title": "Power grid production and demand accounting"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "economy",
+      "number": 237,
+      "stage": "SC-237",
+      "title": "Owned-building construction radius rule"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "economy",
+      "number": 238,
+      "stage": "SC-238",
+      "title": "Mobile HQ deployment and building lifecycle"
+    },
+    {
+      "device_gate": false,
+      "file_count": 3,
+      "group": "economy",
+      "number": 239,
+      "stage": "SC-239",
+      "title": "Per-building production queue model"
+    },
+    {
+      "device_gate": true,
+      "file_count": 2,
+      "group": "economy",
+      "number": 240,
+      "stage": "SC-240",
+      "title": "Base and economy checkpoint smoke"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "combat",
+      "number": 241,
+      "stage": "SC-241",
+      "title": "Typed deterministic damage packets"
+    },
+    {
+      "device_gate": false,
+      "file_count": 3,
+      "group": "combat",
+      "number": 242,
+      "stage": "SC-242",
+      "title": "Armor and weapon specifications"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "combat",
+      "number": 243,
+      "stage": "SC-243",
+      "title": "Projectile state and deterministic travel"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "combat",
+      "number": 244,
+      "stage": "SC-244",
+      "title": "Authoritative combat resolver"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "combat",
+      "number": 245,
+      "stage": "SC-245",
+      "title": "Engineer repair service with three-engineer cap"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "combat",
+      "number": 246,
+      "stage": "SC-246",
+      "title": "Engineer capture and sabotage progress"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "combat",
+      "number": 247,
+      "stage": "SC-247",
+      "title": "Low-power penalties for production, engineers, aircraft, and superweapons"
+    },
+    {
+      "device_gate": false,
+      "file_count": 3,
+      "group": "combat",
+      "number": 248,
+      "stage": "SC-248",
+      "title": "Deterministic death cleanup and wreck records"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "combat",
+      "number": 249,
+      "stage": "SC-249",
+      "title": "Enemy auto-retaliation policy"
+    },
+    {
+      "device_gate": true,
+      "file_count": 2,
+      "group": "combat",
+      "number": 250,
+      "stage": "SC-250",
+      "title": "Combat and engineer checkpoint smoke"
+    },
+    {
+      "device_gate": false,
+      "file_count": 4,
+      "group": "domains",
+      "number": 251,
+      "stage": "SC-251",
+      "title": "Data-driven six-slot faction catalog without invented canon"
+    },
+    {
+      "device_gate": false,
+      "file_count": 3,
+      "group": "domains",
+      "number": 252,
+      "stage": "SC-252",
+      "title": "Technology graph and unlock prerequisites"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "domains",
+      "number": 253,
+      "stage": "SC-253",
+      "title": "Spy technology access and stolen-tech removal policy"
+    },
+    {
+      "device_gate": false,
+      "file_count": 3,
+      "group": "domains",
+      "number": 254,
+      "stage": "SC-254",
+      "title": "Generic land-unit archetype catalog"
+    },
+    {
+      "device_gate": false,
+      "file_count": 3,
+      "group": "domains",
+      "number": 255,
+      "stage": "SC-255",
+      "title": "Aircraft ammo and low-power reload behavior"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "domains",
+      "number": 256,
+      "stage": "SC-256",
+      "title": "Naval movement and water-domain state"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "domains",
+      "number": 257,
+      "stage": "SC-257",
+      "title": "Transport and amphibious payload state"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "domains",
+      "number": 258,
+      "stage": "SC-258",
+      "title": "Superweapon charging and low-power shutdown"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "domains",
+      "number": 259,
+      "stage": "SC-259",
+      "title": "Configurable balance profile and scale targets"
+    },
+    {
+      "device_gate": true,
+      "file_count": 2,
+      "group": "domains",
+      "number": 260,
+      "stage": "SC-260",
+      "title": "Mixed land, air, and naval checkpoint smoke"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "final",
+      "number": 261,
+      "stage": "SC-261",
+      "title": "Deterministic AI perception snapshot"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "final",
+      "number": 262,
+      "stage": "SC-262",
+      "title": "AI economy planner"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "final",
+      "number": 263,
+      "stage": "SC-263",
+      "title": "AI combat planner"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "final",
+      "number": 264,
+      "stage": "SC-264",
+      "title": "Seeded AI decision scheduler"
+    },
+    {
+      "device_gate": false,
+      "file_count": 3,
+      "group": "final",
+      "number": 265,
+      "stage": "SC-265",
+      "title": "Match rules, timer, and sudden-death state"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "final",
+      "number": 266,
+      "stage": "SC-266",
+      "title": "Victory conditions and surviving-team evaluation"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "final",
+      "number": 267,
+      "stage": "SC-267",
+      "title": "Integrity monitor and anti-cheat response policy"
+    },
+    {
+      "device_gate": false,
+      "file_count": 2,
+      "group": "final",
+      "number": 268,
+      "stage": "SC-268",
+      "title": "Replay verification against authoritative hashes"
+    },
+    {
+      "device_gate": false,
+      "file_count": 4,
+      "group": "final",
+      "number": 269,
+      "stage": "SC-269",
+      "title": "Interactive Shadow vertical-slice screen"
+    },
+    {
+      "device_gate": true,
+      "file_count": 2,
+      "group": "final",
+      "number": 270,
+      "stage": "SC-270",
+      "title": "Final integrated vertical-slice smoke and device gate"
+    }
+  ],
+  "train_id": "swiftconquer-sc213-sc270-master-shadow-v1"
+}

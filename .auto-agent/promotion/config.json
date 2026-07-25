@@ -1,0 +1,24 @@
+{
+  "automatic_tags": false,
+  "device_gate": {
+    "combat_resolution": "PASS",
+    "crash_or_overflow_observed": "NONE",
+    "deployment_validation": "PASS",
+    "economy_state_change": "PASS",
+    "enemy_spawn": "PASS",
+    "input_response": "PASS",
+    "landscape_layout": "PASS",
+    "launch": "PASS",
+    "status": "PASS"
+  },
+  "green_run_id": 30057716614,
+  "green_source_branch": "validation/auto-agent-shadow/sc213-sc270-master-v2-v3fix-20260723_205902",
+  "green_specimen_commit": "23210b91e9fdb98c7f4981943132b7652608b075",
+  "green_trigger_commit": "ef713659fd5a61372febddac9203505ef705ecd9",
+  "production_base": "dbedc8dd830b380b11e36d9f8e6bf3c8065973c4",
+  "production_branch": "working/phase170-movement-ci",
+  "production_mutation": false,
+  "repository": "cube23games/swift_conquer_game",
+  "schema_version": 1,
+  "stage_count": 58
+}

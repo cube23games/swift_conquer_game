@@ -1,0 +1,151 @@
+name: SwiftConquer SC-213-SC-270 Promotion Gate
+
+on:
+  push:
+    branches:
+      - 'promotion/sc213-sc270-v1*'
+
+permissions:
+  contents: read
+
+jobs:
+  promotion-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+    steps:
+      - name: Checkout promotion branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch locked green specimen
+        run: |
+          git fetch origin \
+            validation/auto-agent-shadow/sc213-sc270-master-v2-v3fix-20260723_205902
+
+      - name: Verify 58-commit promotion history and source parity
+        run: python3 tools/promotion/verify_promotion.py
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.35.0
+          cache: true
+
+      - name: Resolve Flutter dependencies
+        run: flutter pub get
+
+      - name: Foundation checkpoint
+        run: flutter test test/sc_master/foundation
+
+      - name: Controls checkpoint
+        run: flutter test test/sc_master/controls
+
+      - name: Economy checkpoint
+        run: flutter test test/sc_master/economy
+
+      - name: Combat checkpoint
+        run: flutter test test/sc_master/combat
+
+      - name: Mixed-domain checkpoint
+        run: flutter test test/sc_master/domains
+
+      - name: Final systems checkpoint
+        run: flutter test test/sc_master/final
+
+      - name: Analyze promoted systems
+        run: |
+          flutter analyze --no-fatal-infos --no-fatal-warnings \
+            lib/sc_master test/sc_master
+
+      - name: Run complete test suite
+        run: flutter test
+
+      - name: Prepare compatible Android shell
+        run: |
+          rm -rf android
+          flutter create . --platforms=android \
+            --project-name swift_conquer_game \
+            --org com.swiftconquer
+
+      - name: Build production-path debug APK
+        run: |
+          flutter build apk --debug
+          cp build/app/outputs/flutter-apk/app-debug.apk \
+            build/app/outputs/flutter-apk/swiftconquer-production-path-debug.apk
+
+      - name: Build device-gate debug APK
+        run: |
+          flutter build apk --debug --dart-define=SC_MASTER_SLICE=true
+          cp build/app/outputs/flutter-apk/app-debug.apk \
+            build/app/outputs/flutter-apk/swiftconquer-device-gate-debug.apk
+
+      - name: Seal promotion evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p promotion_evidence
+          git log --reverse --format='%H  %s' \
+            dbedc8dd830b380b11e36d9f8e6bf3c8065973c4..HEAD \
+            > promotion_evidence/COMMITS.txt
+          sha256sum \
+            build/app/outputs/flutter-apk/swiftconquer-production-path-debug.apk \
+            build/app/outputs/flutter-apk/swiftconquer-device-gate-debug.apk \
+            > promotion_evidence/APK_SHA256SUMS.txt
+          cp .auto-agent/promotion/config.json promotion_evidence/
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          root = Path('promotion_evidence')
+          summary = {
+              'schema_version': 1,
+              'passed': True,
+              'stage_count': 58,
+              'commit_count': 58,
+              'production_mutation': False,
+              'automatic_tags': False,
+              'run_id': os.environ.get('GITHUB_RUN_ID'),
+              'head_sha': os.environ.get('GITHUB_SHA'),
+              'branch': os.environ.get('GITHUB_REF_NAME'),
+              'green_run_id': 30057716614,
+              'green_specimen_commit':
+                  '23210b91e9fdb98c7f4981943132b7652608b075',
+          }
+          (root / 'summary.json').write_text(
+              json.dumps(summary, indent=2, sort_keys=True) + '\n'
+          )
+          PY
+          sha256sum promotion_evidence/* \
+            > promotion_evidence/SHA256SUMS.txt
+
+      - name: Upload promotion evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: SWIFTCONQUER_SC213_SC270_PROMOTION_EVIDENCE
+          path: promotion_evidence
+          retention-days: 30
+
+      - name: Upload production-path APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: SWIFTCONQUER_SC270_PRODUCTION_PATH_DEBUG_APK
+          path: build/app/outputs/flutter-apk/swiftconquer-production-path-debug.apk
+          retention-days: 14
+
+      - name: Upload device-gate APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: SWIFTCONQUER_SC270_PROMOTION_DEVICE_GATE_APK
+          path: build/app/outputs/flutter-apk/swiftconquer-device-gate-debug.apk
+          retention-days: 14
