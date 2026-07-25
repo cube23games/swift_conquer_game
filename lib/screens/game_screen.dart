@@ -3,6 +3,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import '../features/command_drawer/command_drawer.dart';
+import '../features/command_drawer/command_drawer_handle.dart';
+import '../features/hud/compact_status_hud.dart';
+import '../features/hud/context_command_bar.dart';
+
 import '../game/buildings/build_placement.dart';
 import '../game/buildings/build_radius.dart';
 import '../game/buildings/building_footprint.dart';
@@ -55,11 +60,10 @@ class _GameScreenState extends State<GameScreen> {
   double? _lastScaleValue;
 
   bool _cameraPrimed = false;
+  bool _commandDrawerOpen = false;
   Vec2? _homeCenter;
 
   static const double _dragThreshold = 12.0;
-  static const double _sidebarWidth = 220.0;
-  static const double _topOverlayHeight = 96.0;
 
   @override
   void initState() {
@@ -157,6 +161,14 @@ class _GameScreenState extends State<GameScreen> {
     return id;
   }
 
+  bool _hasFriendlyBuilding(BuildingType type) {
+    for (final id in loop.world.buildingIds) {
+      if (loop.world.buildingTeams[id]?.id != 1) continue;
+      if (loop.world.buildingTypes[id] == type) return true;
+    }
+    return false;
+  }
+
   bool get _hasFriendlyHq {
     for (final id in loop.world.buildingIds) {
       if (loop.world.buildingTeams[id]?.id != 1) continue;
@@ -249,7 +261,8 @@ class _GameScreenState extends State<GameScreen> {
     _rebuildOccupancy();
 
     setState(() {
-      _status = 'HQ established. Build from the right sidebar.';
+      _status = 'HQ established. Open Commands to construct.';
+      _commandDrawerOpen = true;
     });
   }
 
@@ -267,6 +280,7 @@ class _GameScreenState extends State<GameScreen> {
         _status = 'Build mode cancelled.';
       } else {
         buildMode.select(type);
+        _commandDrawerOpen = false;
         _status = 'Tap the map to place ${type.label}.';
       }
     });
@@ -493,6 +507,7 @@ class _GameScreenState extends State<GameScreen> {
           _lastScaleFocal = null;
           _lastScaleValue = null;
           _status = '${type.label} placed.';
+          _commandDrawerOpen = true;
         });
       } else {
         setState(() {
@@ -619,159 +634,95 @@ class _GameScreenState extends State<GameScreen> {
     );
   }
 
+
   Widget _buildTopOverlay() {
-    return SizedBox(
-      height: _topOverlayHeight,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: double.infinity,
-            height: 56,
-            color: const Color(0xFF0F172A),
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-            alignment: Alignment.centerLeft,
-            child: _buildTopBookmarkBar(),
-          ),
-          Container(
-            width: double.infinity,
-            color: const Color(0xFF111827),
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            child: Text(
-              _status,
-              style: const TextStyle(color: Colors.white),
-            ),
-          ),
-        ],
-      ),
-    );
+    return CompactStatusHud(status: _status);
   }
+
 
   Widget _buildBottomBar() {
-    final isBarracks =
-        _singleSelectedBuildingOfType(BuildingType.barracks) != null;
-    final isRefinery =
-        _singleSelectedBuildingOfType(BuildingType.refinery) != null;
-    final isWarFactory =
-        _singleSelectedBuildingOfType(BuildingType.warFactory) != null;
-
-    return Container(
-      width: double.infinity,
-      color: const Color(0xFF0F172A),
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            children: [
-              if (_singleSelectedMobileHq() != null)
-                ElevatedButton(
-                  style: _flatButtonStyle(),
-                  onPressed: _deploySelectedMobileHq,
-                  child: const Text('Deploy HQ'),
-                ),
-              if (isBarracks)
-                ElevatedButton(
-                  style: _flatButtonStyle(),
-                  onPressed: _produceInfantry,
-                  child: const Text('Produce Infantry'),
-                ),
-              if (isRefinery)
-                ElevatedButton(
-                  style: _flatButtonStyle(),
-                  onPressed: _produceHarvester,
-                  child: const Text('Produce Harvester'),
-                ),
-              if (isWarFactory)
-                ElevatedButton(
-                  style: _flatButtonStyle(),
-                  onPressed: _produceTank,
-                  child: const Text('Produce Tank'),
-                ),
-              OutlinedButton(
-                style: _chipButtonStyle(),
-                onPressed: () {
-                  setState(() {
-                    buildMode.clear();
-                    input.clearSelection();
-                    _status = 'Selection cleared.';
-                  });
-                },
-                child: const Text('Clear'),
-              ),
-            ],
-          ),
-          const SizedBox(height: 6),
-          Wrap(
-            spacing: 6,
-            runSpacing: 6,
-            children: List<Widget>.generate(7, (i) => _buildGroupChip(i + 1)),
-          ),
-        ],
-      ),
+    final actions = <ContextAction>[];
+    if (_singleSelectedMobileHq() != null) {
+      actions.add(ContextAction(
+        label: 'Deploy HQ',
+        onPressed: _deploySelectedMobileHq,
+        primary: true,
+      ));
+    }
+    if (_singleSelectedBuildingOfType(BuildingType.barracks) != null) {
+      actions.add(ContextAction(
+        label: 'Produce Infantry',
+        onPressed: _produceInfantry,
+        primary: true,
+      ));
+    }
+    if (_singleSelectedBuildingOfType(BuildingType.refinery) != null) {
+      actions.add(ContextAction(
+        label: 'Produce Harvester',
+        onPressed: _produceHarvester,
+        primary: true,
+      ));
+    }
+    if (_singleSelectedBuildingOfType(BuildingType.warFactory) != null) {
+      actions.add(ContextAction(
+        label: 'Produce Tank',
+        onPressed: _produceTank,
+        primary: true,
+      ));
+    }
+    actions.add(ContextAction(
+      label: 'Clear',
+      onPressed: () {
+        setState(() {
+          buildMode.clear();
+          input.clearSelection();
+          _status = 'Selection cleared.';
+        });
+      },
+    ));
+    actions.add(ContextAction(
+      label: 'Commands',
+      onPressed: () => setState(() => _commandDrawerOpen = true),
+    ));
+    return ContextCommandBar(
+      selectionCount: input.selected.length,
+      actions: actions,
     );
   }
 
-  Widget _buildPersistentBuildSidebar() {
-    final buttons = <BuildingType>[
-      BuildingType.powerPlant,
-      BuildingType.barracks,
-      BuildingType.refinery,
-      BuildingType.warFactory,
-    ];
 
-    return Container(
-      width: _sidebarWidth,
-      color: const Color(0xFF0F172A),
-      padding: const EdgeInsets.all(12),
-      child: SafeArea(
-        left: false,
-        top: false,
-        bottom: false,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Text(
-              'Build',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-                fontSize: 22,
-              ),
-            ),
-            const SizedBox(height: 12),
-            for (final type in buttons)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10),
-                child: ElevatedButton(
-                  style: _flatButtonStyle(),
-                  onPressed: _hasFriendlyHq ? () => _toggleBuildMode(type) : null,
-                  child: Text(
-                    buildMode.pendingType == type
-                        ? 'Cancel ${type.label}'
-                        : type.label,
-                  ),
-                ),
-              ),
-            const Spacer(),
-            Text(
-              _hasFriendlyHq ? 'Build directly on the map.' : 'Deploy HQ first.',
-              textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.white54),
-            ),
-          ],
-        ),
-      ),
+  Widget _buildPersistentBuildSidebar() {
+    return CommandDrawer(
+      hasHq: _hasFriendlyHq,
+      hasBarracks: _hasFriendlyBuilding(BuildingType.barracks),
+      hasRefinery: _hasFriendlyBuilding(BuildingType.refinery),
+      hasWarFactory: _hasFriendlyBuilding(BuildingType.warFactory),
+      selectedBarracks:
+          _singleSelectedBuildingOfType(BuildingType.barracks) != null,
+      selectedRefinery:
+          _singleSelectedBuildingOfType(BuildingType.refinery) != null,
+      selectedWarFactory:
+          _singleSelectedBuildingOfType(BuildingType.warFactory) != null,
+      pendingType: buildMode.pendingType,
+      onSelectStructure: _toggleBuildMode,
+      onProduceInfantry: _produceInfantry,
+      onProduceHarvester: _produceHarvester,
+      onProduceTank: _produceTank,
+      onClose: () => setState(() => _commandDrawerOpen = false),
+      onRecallGroup: _recallGroup,
+      onAssignGroup: _assignGroup,
+      groupCount: (slot) => groups.count(slot, loop.world),
+      onRecallBookmark: _recallBookmark,
+      onSaveBookmark: _saveBookmark,
+      bookmarkFilled: bookmarks.hasSlot,
     );
   }
 
   @override
+
+  @override
   Widget build(BuildContext context) {
     final g = _grid;
-
     if (_loading || _map == null || g == null) {
       return const Scaffold(
         body: Center(child: CircularProgressIndicator()),
@@ -787,167 +738,177 @@ class _GameScreenState extends State<GameScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFF0B1220),
       body: SafeArea(
-        child: ColoredBox(
-          color: const Color(0xFF0B1220),
-          child: Stack(
-            children: [
-              Column(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: _topOverlayHeight),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: LayoutBuilder(
-                              builder: (context, constraints) {
-                                final playfieldSize = Size(
-                                  constraints.maxWidth,
-                                  constraints.maxHeight,
-                                );
-                                _primeCameraIfNeeded(playfieldSize);
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final drawerWidth =
+                (constraints.maxWidth * 0.42).clamp(280.0, 360.0);
+            final playfieldSize = Size(
+              constraints.maxWidth,
+              constraints.maxHeight,
+            );
+            _primeCameraIfNeeded(playfieldSize);
 
-                                return Listener(
-                                  onPointerDown: (event) {
-                                    _activePointers++;
-                                    if (_activePointers == 1 &&
-                                        !buildMode.isActive) {
-                                      _dragStart = event.localPosition;
-                                      _dragCurrent = event.localPosition;
-                                      _dragSelecting = false;
-                                    } else {
-                                      _dragStart = null;
-                                      _dragCurrent = null;
-                                      _dragSelecting = false;
-                                    }
-                                    setState(() {});
-                                  },
-                                  onPointerMove: (event) {
-                                    if (_activePointers == 1 &&
-                                        _dragStart != null &&
-                                        !buildMode.isActive) {
-                                      _dragCurrent = event.localPosition;
-                                      final delta =
-                                          _dragCurrent! - _dragStart!;
-                                      if (delta.distance >= _dragThreshold) {
-                                        _dragSelecting = true;
-                                      }
-                                      setState(() {});
-                                    }
-                                  },
-                                  onPointerUp: (event) {
-                                    if (_activePointers == 1) {
-                                      if (_dragSelecting) {
-                                        setState(_finishSelectionDrag);
-                                      } else {
-                                        _dragStart = null;
-                                        _dragCurrent = null;
-                                        _dragSelecting = false;
-                                        _handleTapAt(event.localPosition);
-                                      }
-                                    }
-                                    _activePointers =
-                                        (_activePointers - 1).clamp(0, 99);
-                                    if (_activePointers < 2) {
-                                      _lastScaleFocal = null;
-                                    }
-                                    if (_activePointers < 3) {
-                                      _lastScaleValue = null;
-                                    }
-                                    setState(() {});
-                                  },
-                                  onPointerCancel: (_) {
-                                    _activePointers = 0;
-                                    _dragStart = null;
-                                    _dragCurrent = null;
-                                    _dragSelecting = false;
-                                    _lastScaleFocal = null;
-                                    _lastScaleValue = null;
-                                    setState(() {});
-                                  },
-                                  child: GestureDetector(
-                                    behavior: HitTestBehavior.opaque,
-                                    onScaleStart: (details) {
-                                      if (_activePointers >= 2) {
-                                        _lastScaleFocal = details.focalPoint;
-                                      }
-                                      if (_activePointers >= 3) {
-                                        _lastScaleValue = 1.0;
-                                      } else {
-                                        _lastScaleValue = null;
-                                      }
-                                      if (_activePointers >= 2) {
-                                        _dragStart = null;
-                                        _dragCurrent = null;
-                                        _dragSelecting = false;
-                                      }
-                                    },
-                                    onScaleUpdate: (details) {
-                                      if (_activePointers == 2) {
-                                        final current = details.focalPoint;
-                                        final last = _lastScaleFocal;
-                                        if (last != null) {
-                                          final delta = current - last;
-                                          cam.panByScreenDelta(
-                                            Vec2(delta.dx, delta.dy),
-                                          );
-                                        }
-                                        _lastScaleFocal = current;
-                                        setState(() {});
-                                      } else if (_activePointers >= 3) {
-                                        final current = details.focalPoint;
-                                        final lastScale =
-                                            _lastScaleValue ?? 1.0;
-                                        final deltaScale =
-                                            details.scale / lastScale;
-                                        cam.zoomByScale(
-                                          scaleDelta: deltaScale,
-                                          focalScreen:
-                                              Vec2(current.dx, current.dy),
-                                        );
-                                        _lastScaleFocal = current;
-                                        _lastScaleValue = details.scale;
-                                        setState(() {});
-                                      }
-                                    },
-                                    onScaleEnd: (_) {
-                                      _lastScaleFocal = null;
-                                      _lastScaleValue = null;
-                                    },
-                                    child: CustomPaint(
-                                      painter: WorldPainter(
-                                        world: loop.world,
-                                        cam: cam,
-                                        selected: input.selected,
-                                        map: _map,
-                                        grid: g,
-                                        buildRadiusCells: buildRadius,
-                                        pendingType: buildMode.pendingType,
-                                        selectionBoxScreen: _selectionBoxScreen,
-                                      ),
-                                      child: const SizedBox.expand(),
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                          _buildPersistentBuildSidebar(),
-                        ],
+            return Stack(
+              children: [
+                Positioned.fill(
+                  child: Listener(
+                    onPointerDown: (event) {
+                      _activePointers++;
+                      if (_activePointers == 1 && !buildMode.isActive) {
+                        _dragStart = event.localPosition;
+                        _dragCurrent = event.localPosition;
+                        _dragSelecting = false;
+                      } else {
+                        _dragStart = null;
+                        _dragCurrent = null;
+                        _dragSelecting = false;
+                      }
+                      setState(() {});
+                    },
+                    onPointerMove: (event) {
+                      if (_activePointers == 1 &&
+                          _dragStart != null &&
+                          !buildMode.isActive) {
+                        _dragCurrent = event.localPosition;
+                        final delta = _dragCurrent! - _dragStart!;
+                        if (delta.distance >= _dragThreshold) {
+                          _dragSelecting = true;
+                        }
+                        setState(() {});
+                      }
+                    },
+                    onPointerUp: (event) {
+                      if (_activePointers == 1) {
+                        if (_dragSelecting) {
+                          setState(_finishSelectionDrag);
+                        } else {
+                          _dragStart = null;
+                          _dragCurrent = null;
+                          _dragSelecting = false;
+                          _handleTapAt(event.localPosition);
+                        }
+                      }
+                      _activePointers =
+                          (_activePointers - 1).clamp(0, 99);
+                      if (_activePointers < 2) {
+                        _lastScaleFocal = null;
+                        _lastScaleValue = null;
+                      }
+                      setState(() {});
+                    },
+                    onPointerCancel: (_) {
+                      _activePointers = 0;
+                      _dragStart = null;
+                      _dragCurrent = null;
+                      _dragSelecting = false;
+                      _lastScaleFocal = null;
+                      _lastScaleValue = null;
+                      setState(() {});
+                    },
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onScaleStart: (details) {
+                        if (_activePointers >= 2) {
+                          _lastScaleFocal = details.focalPoint;
+                          _lastScaleValue = 1.0;
+                          _dragStart = null;
+                          _dragCurrent = null;
+                          _dragSelecting = false;
+                        }
+                      },
+                      onScaleUpdate: (details) {
+                        if (_activePointers < 2) return;
+                        final current = details.focalPoint;
+                        final lastFocal = _lastScaleFocal;
+                        if (lastFocal != null) {
+                          final delta = current - lastFocal;
+                          cam.panByScreenDelta(Vec2(delta.dx, delta.dy));
+                        }
+                        final lastScale = _lastScaleValue ?? 1.0;
+                        final deltaScale = details.scale / lastScale;
+                        if ((deltaScale - 1.0).abs() > 0.002) {
+                          cam.zoomByScale(
+                            scaleDelta: deltaScale,
+                            focalScreen: Vec2(current.dx, current.dy),
+                          );
+                        }
+                        _lastScaleFocal = current;
+                        _lastScaleValue = details.scale;
+                        setState(() {});
+                      },
+                      onScaleEnd: (_) {
+                        _lastScaleFocal = null;
+                        _lastScaleValue = null;
+                      },
+                      child: CustomPaint(
+                        painter: WorldPainter(
+                          world: loop.world,
+                          cam: cam,
+                          selected: input.selected,
+                          map: _map,
+                          grid: g,
+                          buildRadiusCells: buildRadius,
+                          pendingType: buildMode.pendingType,
+                          selectionBoxScreen: _selectionBoxScreen,
+                        ),
+                        child: const SizedBox.expand(),
                       ),
                     ),
                   ),
-                  _buildBottomBar(),
-                ],
-              ),
-              Positioned(
-                top: 0,
-                left: 0,
-                right: _sidebarWidth,
-                child: _buildTopOverlay(),
-              ),
-            ],
-          ),
+                ),
+                Positioned(top: 0, left: 0, right: 0, child: _buildTopOverlay()),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: _buildBottomBar(),
+                ),
+                if (_commandDrawerOpen)
+                  Positioned.fill(
+                    child: GestureDetector(
+                      key: const ValueKey('command-drawer-scrim'),
+                      onTap: () =>
+                          setState(() => _commandDrawerOpen = false),
+                      child: const ColoredBox(color: Color(0x55000000)),
+                    ),
+                  ),
+                AnimatedPositioned(
+                  duration: const Duration(milliseconds: 220),
+                  curve: Curves.easeOutCubic,
+                  top: 0,
+                  bottom: 0,
+                  width: drawerWidth,
+                  right: _commandDrawerOpen ? 0 : -drawerWidth,
+                  child: _buildPersistentBuildSidebar(),
+                ),
+                AnimatedPositioned(
+                  duration: const Duration(milliseconds: 220),
+                  curve: Curves.easeOutCubic,
+                  top: 104,
+                  right: _commandDrawerOpen ? drawerWidth : 0,
+                  child: CommandDrawerHandle(
+                    open: _commandDrawerOpen,
+                    onPressed: () => setState(
+                      () => _commandDrawerOpen = !_commandDrawerOpen,
+                    ),
+                  ),
+                ),
+                const Positioned(
+                  left: 10,
+                  bottom: 72,
+                  child: IgnorePointer(
+                    child: Text(
+                      '1 finger select • 2 fingers pan + pinch zoom',
+                      style: TextStyle(
+                        color: Colors.white60,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
