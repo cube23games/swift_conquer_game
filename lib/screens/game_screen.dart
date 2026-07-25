@@ -19,6 +19,7 @@ import '../game/map/map_grid.dart';
 import '../game/map/map_loader.dart';
 import '../game/map/occupancy_map.dart';
 import '../game/math/vec2.dart';
+import '../game/production/primary_production_registry.dart';
 import '../game/state/build_mode.dart';
 import '../game/state/camera_bookmarks.dart';
 import '../game/state/selection_groups.dart';
@@ -41,6 +42,8 @@ class _GameScreenState extends State<GameScreen> {
   final BuildMode buildMode = BuildMode();
   final SelectionGroups groups = SelectionGroups();
   final CameraBookmarks bookmarks = CameraBookmarks();
+  final PrimaryProductionRegistry primaryProduction =
+      PrimaryProductionRegistry();
 
   final Map<EntityId, int> _productionSpawnIndex = <EntityId, int>{};
   final Map<EntityId, int> _productionMoveIndex = <EntityId, int>{};
@@ -167,6 +170,55 @@ class _GameScreenState extends State<GameScreen> {
       if (loop.world.buildingTypes[id] == type) return true;
     }
     return false;
+  }
+
+  int _friendlyBuildingCount(BuildingType type) {
+    var count = 0;
+    for (final id in loop.world.buildingIds) {
+      if (loop.world.buildingTeams[id]?.id != 1) continue;
+      if (loop.world.buildingTypes[id] == type) count++;
+    }
+    return count;
+  }
+
+  EntityId? _primaryProductionFacility(BuildingType type) {
+    return primaryProduction.primaryFor(
+      world: loop.world,
+      teamId: 1,
+      type: type,
+    );
+  }
+
+  EntityId? _singleSelectedPrimaryCapableFacility() {
+    if (input.selected.length != 1) return null;
+    final id = input.selected.first;
+    if (!loop.world.buildingIds.contains(id)) return null;
+    final type = loop.world.buildingTypes[id];
+    if (type == null || !PrimaryProductionRegistry.supports(type)) {
+      return null;
+    }
+    if (loop.world.buildingTeams[id]?.id != 1) return null;
+    return id;
+  }
+
+  void _makeSelectedProductionFacilityPrimary() {
+    final selected = _singleSelectedPrimaryCapableFacility();
+    if (selected == null) return;
+    final type = loop.world.buildingTypes[selected];
+    if (type == null) return;
+
+    final changed = primaryProduction.makePrimary(
+      world: loop.world,
+      teamId: 1,
+      type: type,
+      buildingId: selected,
+    );
+
+    setState(() {
+      _status = changed
+          ? '${type.label} #${selected.value} is now Primary.'
+          : 'Could not make ${type.label} Primary.';
+    });
   }
 
   bool get _hasFriendlyHq {
@@ -437,13 +489,19 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   void _produceInfantry() {
-    final barracks = _singleSelectedBuildingOfType(BuildingType.barracks);
-    if (barracks == null) return;
+    final barracks = _primaryProductionFacility(BuildingType.barracks);
+    if (barracks == null) {
+      setState(() {
+        _status = 'Build a Barracks before producing infantry.';
+      });
+      return;
+    }
     _spawnProducedUnit(
       buildingId: barracks,
       unitKind: 'infantry',
       hp: 30,
-      statusText: 'Infantry produced from Barracks.',
+      statusText:
+          'Infantry produced from Primary Barracks #${barracks.value}.',
     );
   }
 
@@ -459,13 +517,19 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   void _produceTank() {
-    final wf = _singleSelectedBuildingOfType(BuildingType.warFactory);
-    if (wf == null) return;
+    final wf = _primaryProductionFacility(BuildingType.warFactory);
+    if (wf == null) {
+      setState(() {
+        _status = 'Build a War Factory before producing tanks.';
+      });
+      return;
+    }
     _spawnProducedUnit(
       buildingId: wf,
       unitKind: 'tank',
       hp: 120,
-      statusText: 'Tank produced from War Factory.',
+      statusText:
+          'Tank produced from Primary War Factory #${wf.value}.',
     );
   }
 
@@ -496,6 +560,15 @@ class _GameScreenState extends State<GameScreen> {
         );
         _rebuildOccupancy();
 
+        final primaryForType = PrimaryProductionRegistry.supports(type)
+            ? primaryProduction.primaryFor(
+                world: loop.world,
+                teamId: 1,
+                type: type,
+              )
+            : null;
+        final becamePrimary = primaryForType == built;
+
         setState(() {
           buildMode.clear();
           input.selected
@@ -506,7 +579,9 @@ class _GameScreenState extends State<GameScreen> {
           _dragSelecting = false;
           _lastScaleFocal = null;
           _lastScaleValue = null;
-          _status = '${type.label} placed.';
+          _status = becamePrimary
+              ? '${type.label} placed and set as Primary.'
+              : '${type.label} placed.';
           _commandDrawerOpen = true;
         });
       } else {
@@ -649,10 +724,19 @@ class _GameScreenState extends State<GameScreen> {
         primary: true,
       ));
     }
-    if (_singleSelectedBuildingOfType(BuildingType.barracks) != null) {
+    final selectedBarracks =
+        _singleSelectedBuildingOfType(BuildingType.barracks);
+    if (selectedBarracks != null) {
+      final isPrimary = primaryProduction.isPrimary(
+        world: loop.world,
+        teamId: 1,
+        type: BuildingType.barracks,
+        buildingId: selectedBarracks,
+      );
       actions.add(CommandBarAction(
-        label: 'Produce Infantry',
-        onPressed: _produceInfantry,
+        label: isPrimary ? 'Produce Infantry' : 'Make Primary Barracks',
+        onPressed:
+            isPrimary ? _produceInfantry : _makeSelectedProductionFacilityPrimary,
         primary: true,
       ));
     }
@@ -663,10 +747,19 @@ class _GameScreenState extends State<GameScreen> {
         primary: true,
       ));
     }
-    if (_singleSelectedBuildingOfType(BuildingType.warFactory) != null) {
+    final selectedWarFactory =
+        _singleSelectedBuildingOfType(BuildingType.warFactory);
+    if (selectedWarFactory != null) {
+      final isPrimary = primaryProduction.isPrimary(
+        world: loop.world,
+        teamId: 1,
+        type: BuildingType.warFactory,
+        buildingId: selectedWarFactory,
+      );
       actions.add(CommandBarAction(
-        label: 'Produce Tank',
-        onPressed: _produceTank,
+        label: isPrimary ? 'Produce Tank' : 'Make Primary War Factory',
+        onPressed:
+            isPrimary ? _produceTank : _makeSelectedProductionFacilityPrimary,
         primary: true,
       ));
     }
@@ -697,12 +790,10 @@ class _GameScreenState extends State<GameScreen> {
       hasBarracks: _hasFriendlyBuilding(BuildingType.barracks),
       hasRefinery: _hasFriendlyBuilding(BuildingType.refinery),
       hasWarFactory: _hasFriendlyBuilding(BuildingType.warFactory),
-      selectedBarracks:
-          _singleSelectedBuildingOfType(BuildingType.barracks) != null,
+      barracksCount: _friendlyBuildingCount(BuildingType.barracks),
+      warFactoryCount: _friendlyBuildingCount(BuildingType.warFactory),
       selectedRefinery:
           _singleSelectedBuildingOfType(BuildingType.refinery) != null,
-      selectedWarFactory:
-          _singleSelectedBuildingOfType(BuildingType.warFactory) != null,
       pendingType: buildMode.pendingType,
       onSelectStructure: _toggleBuildMode,
       onProduceInfantry: _produceInfantry,
@@ -850,6 +941,11 @@ class _GameScreenState extends State<GameScreen> {
                           buildRadiusCells: buildRadius,
                           pendingType: buildMode.pendingType,
                           selectionBoxScreen: _selectionBoxScreen,
+                          primaryProductionFacilities:
+                              primaryProduction.primaryIdsForTeam(
+                            world: loop.world,
+                            teamId: 1,
+                          ),
                         ),
                         child: const SizedBox.expand(),
                       ),

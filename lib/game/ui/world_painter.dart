@@ -20,6 +20,7 @@ class WorldPainter extends CustomPainter {
   final Set<GridCell> buildRadiusCells;
   final BuildingType? pendingType;
   final Rect? selectionBoxScreen;
+  final Set<EntityId> primaryProductionFacilities;
 
   WorldPainter({
     required this.world,
@@ -30,6 +31,7 @@ class WorldPainter extends CustomPainter {
     required this.buildRadiusCells,
     required this.pendingType,
     required this.selectionBoxScreen,
+    this.primaryProductionFacilities = const <EntityId>{},
   });
 
   @override
@@ -153,6 +155,10 @@ class WorldPainter extends CustomPainter {
         );
       }
 
+      if (primaryProductionFacilities.contains(id)) {
+        _drawPrimaryProductionBadge(canvas, rect);
+      }
+
       final tp = TextPainter(
         text: TextSpan(
           text: type.label,
@@ -184,6 +190,43 @@ class WorldPainter extends CustomPainter {
         );
       }
     }
+  }
+
+  void _drawPrimaryProductionBadge(Canvas canvas, Rect rect) {
+    final center = Offset(rect.right - 10, rect.top + 10);
+    canvas.drawCircle(
+      center,
+      10,
+      Paint()..color = const Color(0xFFEAB308),
+    );
+    canvas.drawCircle(
+      center,
+      10,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2
+        ..color = const Color(0xFF111827),
+    );
+
+    final tp = TextPainter(
+      text: const TextSpan(
+        text: 'P',
+        style: TextStyle(
+          color: Color(0xFF111827),
+          fontSize: 11,
+          fontWeight: FontWeight.w900,
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
+
+    tp.paint(
+      canvas,
+      Offset(
+        center.dx - tp.width / 2,
+        center.dy - tp.height / 2,
+      ),
+    );
   }
 
   Color _buildingColor(BuildingType type, int teamId) {

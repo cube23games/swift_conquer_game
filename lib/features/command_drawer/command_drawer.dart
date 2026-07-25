@@ -15,9 +15,9 @@ class CommandDrawer extends StatefulWidget {
     required this.hasBarracks,
     required this.hasRefinery,
     required this.hasWarFactory,
-    required this.selectedBarracks,
+    required this.barracksCount,
+    required this.warFactoryCount,
     required this.selectedRefinery,
-    required this.selectedWarFactory,
     required this.pendingType,
     required this.onSelectStructure,
     required this.onProduceInfantry,
@@ -36,9 +36,9 @@ class CommandDrawer extends StatefulWidget {
   final bool hasBarracks;
   final bool hasRefinery;
   final bool hasWarFactory;
-  final bool selectedBarracks;
+  final int barracksCount;
+  final int warFactoryCount;
   final bool selectedRefinery;
-  final bool selectedWarFactory;
   final BuildingType? pendingType;
   final ValueChanged<BuildingType> onSelectStructure;
   final VoidCallback onProduceInfantry;
@@ -63,6 +63,12 @@ class _CommandDrawerState extends State<CommandDrawer> {
     if (!unlocked) return 'Requires $source';
     if (!selected) return 'Select $source';
     return 'Ready';
+  }
+
+  String _primaryRequirement(bool unlocked, String source, int count) {
+    if (!unlocked) return 'Requires $source';
+    if (count <= 1) return 'Primary $source ready';
+    return 'Primary $source • $count online';
   }
 
   Widget _tileGrid(List<Widget> children) {
@@ -104,15 +110,15 @@ class _CommandDrawerState extends State<CommandDrawer> {
   }
 
   Widget _infantry() {
-    final enabled = widget.hasBarracks && widget.selectedBarracks;
+    final enabled = widget.hasBarracks;
     return _tileGrid([
       ProductionTile(
         title: 'Rifle Infantry',
         icon: Icons.person,
-        subtitle: _requirement(
+        subtitle: _primaryRequirement(
           widget.hasBarracks,
-          widget.selectedBarracks,
           'Barracks',
+          widget.barracksCount,
         ),
         enabled: enabled,
         onPressed: widget.onProduceInfantry,
@@ -123,8 +129,7 @@ class _CommandDrawerState extends State<CommandDrawer> {
   Widget _vehicles() {
     final harvesterEnabled =
         widget.hasRefinery && widget.selectedRefinery;
-    final tankEnabled =
-        widget.hasWarFactory && widget.selectedWarFactory;
+    final tankEnabled = widget.hasWarFactory;
     return _tileGrid([
       ProductionTile(
         title: 'Harvester',
@@ -140,10 +145,10 @@ class _CommandDrawerState extends State<CommandDrawer> {
       ProductionTile(
         title: 'Tank',
         icon: Icons.shield,
-        subtitle: _requirement(
+        subtitle: _primaryRequirement(
           widget.hasWarFactory,
-          widget.selectedWarFactory,
           'War Factory',
+          widget.warFactoryCount,
         ),
         enabled: tankEnabled,
         onPressed: widget.onProduceTank,

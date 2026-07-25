@@ -3,20 +3,28 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:swift_conquer_game/features/command_drawer/command_drawer.dart';
 import 'package:swift_conquer_game/game/buildings/building_type.dart';
 
-CommandDrawer testDrawer({BuildingType? pendingType}) {
+CommandDrawer testDrawer({
+  BuildingType? pendingType,
+  bool hasBarracks = false,
+  bool hasWarFactory = false,
+  int barracksCount = 0,
+  int warFactoryCount = 0,
+  VoidCallback? onProduceInfantry,
+  VoidCallback? onProduceTank,
+}) {
   return CommandDrawer(
     hasHq: true,
-    hasBarracks: false,
+    hasBarracks: hasBarracks,
     hasRefinery: false,
-    hasWarFactory: false,
-    selectedBarracks: false,
+    hasWarFactory: hasWarFactory,
+    barracksCount: barracksCount,
+    warFactoryCount: warFactoryCount,
     selectedRefinery: false,
-    selectedWarFactory: false,
     pendingType: pendingType,
     onSelectStructure: (_) {},
-    onProduceInfantry: () {},
+    onProduceInfantry: onProduceInfantry ?? () {},
     onProduceHarvester: () {},
-    onProduceTank: () {},
+    onProduceTank: onProduceTank ?? () {},
     onClose: () {},
     onRecallGroup: (_) {},
     onAssignGroup: (_) {},
@@ -60,6 +68,54 @@ void main() {
 
     expect(find.text('Rifle Infantry'), findsOneWidget);
     expect(find.text('Requires Barracks'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('infantry production routes through Primary Barracks',
+      (tester) async {
+    var produced = false;
+    await tester.binding.setSurfaceSize(const Size(640, 360));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(MaterialApp(
+      home: testDrawer(
+        hasBarracks: true,
+        barracksCount: 2,
+        onProduceInfantry: () => produced = true,
+      ),
+    ));
+
+    await tester.tap(find.text('Infantry'));
+    await tester.pump();
+
+    expect(find.text('Primary Barracks • 2 online'), findsOneWidget);
+    await tester.tap(find.text('Rifle Infantry'));
+    await tester.pump();
+    expect(produced, isTrue);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('tank production routes through Primary War Factory',
+      (tester) async {
+    var produced = false;
+    await tester.binding.setSurfaceSize(const Size(640, 360));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(MaterialApp(
+      home: testDrawer(
+        hasWarFactory: true,
+        warFactoryCount: 2,
+        onProduceTank: () => produced = true,
+      ),
+    ));
+
+    await tester.tap(find.text('Vehicles'));
+    await tester.pump();
+
+    expect(find.text('Primary War Factory • 2 online'), findsOneWidget);
+    await tester.tap(find.text('Tank'));
+    await tester.pump();
+    expect(produced, isTrue);
     expect(tester.takeException(), isNull);
   });
 }
