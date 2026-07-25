@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-243: Projectile state and deterministic travel",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/combat/projectile_state.dart",
+      "sha256": "fd764b8189c9f058e91afd34364d609907bad32d6573fda4561bb637834d1024"
+    },
+    {
+      "path": "test/sc_master/combat/sc243_projectile_test.dart",
+      "sha256": "c417c1fa898286a146d57293f00a3d1a08e22e966ac84d146bb938dd2480f8a7"
+    }
+  ],
+  "group": "combat",
+  "number": 243,
+  "required_tokens": [],
+  "stage": "SC-243",
+  "title": "Projectile state and deterministic travel"
+}
