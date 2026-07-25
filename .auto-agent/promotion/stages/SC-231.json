@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-231: Team wallet and configurable starting funds",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/economy/wallet.dart",
+      "sha256": "1fb7ef33f6259f4a26f0e24b783a80188915be4ce165c012a3f40c85fd947b45"
+    },
+    {
+      "path": "test/sc_master/economy/sc231_wallet_test.dart",
+      "sha256": "58c5cb5ae5204981ecfde20a2d1c7d524ef3a57604c8eb72e71a23b432e95781"
+    }
+  ],
+  "group": "economy",
+  "number": 231,
+  "required_tokens": [],
+  "stage": "SC-231",
+  "title": "Team wallet and configurable starting funds"
+}
