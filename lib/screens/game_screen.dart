@@ -19,7 +19,9 @@ import '../game/map/map_grid.dart';
 import '../game/map/map_loader.dart';
 import '../game/map/occupancy_map.dart';
 import '../game/math/vec2.dart';
+import '../game/production/facility_production_queues.dart';
 import '../game/production/primary_production_registry.dart';
+import '../game/production/production_unit_type.dart';
 import '../game/state/build_mode.dart';
 import '../game/state/camera_bookmarks.dart';
 import '../game/state/selection_groups.dart';
@@ -44,6 +46,8 @@ class _GameScreenState extends State<GameScreen> {
   final CameraBookmarks bookmarks = CameraBookmarks();
   final PrimaryProductionRegistry primaryProduction =
       PrimaryProductionRegistry();
+  final FacilityProductionQueues productionQueues =
+      FacilityProductionQueues();
 
   final Map<EntityId, int> _productionSpawnIndex = <EntityId, int>{};
   final Map<EntityId, int> _productionMoveIndex = <EntityId, int>{};
@@ -98,6 +102,11 @@ class _GameScreenState extends State<GameScreen> {
 
     _timer = Timer.periodic(const Duration(milliseconds: 16), (_) {
       loop.tick(1 / 60);
+      productionQueues.tick(
+        dt: 1 / 60,
+        world: loop.world,
+      );
+      _drainReadyProduction();
       if (mounted) {
         setState(() {});
       }
@@ -218,6 +227,39 @@ class _GameScreenState extends State<GameScreen> {
       _status = changed
           ? '${type.label} #${selected.value} is now Primary.'
           : 'Could not make ${type.label} Primary.';
+    });
+  }
+
+  EntityId? _singleSelectedProductionFacility() {
+    if (input.selected.length != 1) return null;
+    final id = input.selected.first;
+    final type = loop.world.buildingTypes[id];
+    if (type == BuildingType.barracks ||
+        type == BuildingType.refinery ||
+        type == BuildingType.warFactory) {
+      return id;
+    }
+    return null;
+  }
+
+  ProductionQueueSnapshot? _queueSnapshot(EntityId? buildingId) {
+    if (buildingId == null) return null;
+    return productionQueues.snapshotFor(
+      world: loop.world,
+      buildingId: buildingId,
+    );
+  }
+
+  void _cancelLastSelectedProductionOrder() {
+    final selected = _singleSelectedProductionFacility();
+    if (selected == null) return;
+    final type = loop.world.buildingTypes[selected];
+
+    final cancelled = productionQueues.cancelLast(selected);
+    setState(() {
+      _status = cancelled
+          ? 'Cancelled last ${type?.label ?? "production"} order.'
+          : 'No production order to cancel.';
     });
   }
 
@@ -434,7 +476,7 @@ class _GameScreenState extends State<GameScreen> {
     ];
   }
 
-  Vec2 _findProductionSpawn(EntityId buildingId) {
+  Vec2? _tryFindProductionSpawn(EntityId buildingId) {
     final candidates = _productionSpawnCandidates(buildingId);
     final start = (_productionSpawnIndex[buildingId] ?? 0) % candidates.length;
 
@@ -447,9 +489,7 @@ class _GameScreenState extends State<GameScreen> {
       }
     }
 
-    final fallback = candidates[start % candidates.length];
-    _productionSpawnIndex[buildingId] = (start + 1) % candidates.length;
-    return fallback;
+    return null;
   }
 
   Vec2 _nextProductionMoveTarget(EntityId buildingId) {
@@ -459,33 +499,56 @@ class _GameScreenState extends State<GameScreen> {
     return targets[idx];
   }
 
-  void _spawnProducedUnit({
+  void _queueUnit({
     required EntityId buildingId,
-    required String unitKind,
-    required int hp,
-    required String statusText,
+    required ProductionUnitType item,
+    required String source,
   }) {
-    final team = loop.world.buildingTeams[buildingId];
-    if (team == null) return;
+    final queued = productionQueues.enqueue(
+      world: loop.world,
+      buildingId: buildingId,
+      item: item,
+    );
+    final count = productionQueues.queueCount(buildingId);
 
-    final spawn = _findProductionSpawn(buildingId);
+    setState(() {
+      _status = queued
+          ? '${item.label} queued at $source #${buildingId.value} '
+              '($count/${productionQueues.capacity}).'
+          : 'Could not queue ${item.label}; verify the facility and capacity.';
+    });
+  }
+
+  bool _tryCompleteProduction(ProductionQueueSnapshot snapshot) {
+    final item = snapshot.current;
+    final buildingId = snapshot.buildingId;
+    final team = loop.world.buildingTeams[buildingId];
+    if (item == null || team == null) return false;
+
+    final spawn = _tryFindProductionSpawn(buildingId);
+    if (spawn == null) return false;
 
     final unit = loop.world.spawnUnit(
       spawn,
       teamId: team.id,
-      hp: hp,
-      kind: unitKind,
+      hp: item.hp,
+      kind: item.unitKind,
     );
 
     final moveTarget = _nextProductionMoveTarget(buildingId);
     loop.world.moveOrders[unit]?.target = moveTarget;
+    _status = '${item.label} completed at '
+        '${loop.world.buildingTypes[buildingId]?.label ?? "facility"} '
+        '#${buildingId.value}.';
 
-    setState(() {
-      input.selected
-        ..clear()
-        ..add(unit);
-      _status = statusText;
-    });
+    return productionQueues.consumeReady(buildingId);
+  }
+
+  void _drainReadyProduction() {
+    final ready = productionQueues.readySnapshots(world: loop.world);
+    for (final snapshot in ready) {
+      _tryCompleteProduction(snapshot);
+    }
   }
 
   void _produceInfantry() {
@@ -496,23 +559,25 @@ class _GameScreenState extends State<GameScreen> {
       });
       return;
     }
-    _spawnProducedUnit(
+    _queueUnit(
       buildingId: barracks,
-      unitKind: 'infantry',
-      hp: 30,
-      statusText:
-          'Infantry produced from Primary Barracks #${barracks.value}.',
+      item: ProductionUnitType.rifleInfantry,
+      source: 'Primary Barracks',
     );
   }
 
   void _produceHarvester() {
     final refinery = _singleSelectedBuildingOfType(BuildingType.refinery);
-    if (refinery == null) return;
-    _spawnProducedUnit(
+    if (refinery == null) {
+      setState(() {
+        _status = 'Select a Refinery before queueing a Harvester.';
+      });
+      return;
+    }
+    _queueUnit(
       buildingId: refinery,
-      unitKind: 'harvester',
-      hp: 80,
-      statusText: 'Harvester produced from Refinery.',
+      item: ProductionUnitType.harvester,
+      source: 'Refinery',
     );
   }
 
@@ -524,12 +589,10 @@ class _GameScreenState extends State<GameScreen> {
       });
       return;
     }
-    _spawnProducedUnit(
+    _queueUnit(
       buildingId: wf,
-      unitKind: 'tank',
-      hp: 120,
-      statusText:
-          'Tank produced from Primary War Factory #${wf.value}.',
+      item: ProductionUnitType.tank,
+      source: 'Primary War Factory',
     );
   }
 
@@ -734,7 +797,7 @@ class _GameScreenState extends State<GameScreen> {
         buildingId: selectedBarracks,
       );
       actions.add(CommandBarAction(
-        label: isPrimary ? 'Produce Infantry' : 'Make Primary Barracks',
+        label: isPrimary ? 'Queue Infantry' : 'Make Primary Barracks',
         onPressed:
             isPrimary ? _produceInfantry : _makeSelectedProductionFacilityPrimary,
         primary: true,
@@ -742,7 +805,7 @@ class _GameScreenState extends State<GameScreen> {
     }
     if (_singleSelectedBuildingOfType(BuildingType.refinery) != null) {
       actions.add(CommandBarAction(
-        label: 'Produce Harvester',
+        label: 'Queue Harvester',
         onPressed: _produceHarvester,
         primary: true,
       ));
@@ -757,10 +820,18 @@ class _GameScreenState extends State<GameScreen> {
         buildingId: selectedWarFactory,
       );
       actions.add(CommandBarAction(
-        label: isPrimary ? 'Produce Tank' : 'Make Primary War Factory',
+        label: isPrimary ? 'Queue Tank' : 'Make Primary War Factory',
         onPressed:
             isPrimary ? _produceTank : _makeSelectedProductionFacilityPrimary,
         primary: true,
+      ));
+    }
+    final selectedProduction = _singleSelectedProductionFacility();
+    if (selectedProduction != null &&
+        productionQueues.queueCount(selectedProduction) > 0) {
+      actions.add(CommandBarAction(
+        label: 'Cancel Last (${productionQueues.queueCount(selectedProduction)})',
+        onPressed: _cancelLastSelectedProductionOrder,
       ));
     }
     actions.add(CommandBarAction(
@@ -790,15 +861,25 @@ class _GameScreenState extends State<GameScreen> {
       hasBarracks: _hasFriendlyBuilding(BuildingType.barracks),
       hasRefinery: _hasFriendlyBuilding(BuildingType.refinery),
       hasWarFactory: _hasFriendlyBuilding(BuildingType.warFactory),
+      hasAdvancedTech: false,
       barracksCount: _friendlyBuildingCount(BuildingType.barracks),
       warFactoryCount: _friendlyBuildingCount(BuildingType.warFactory),
       selectedRefinery:
           _singleSelectedBuildingOfType(BuildingType.refinery) != null,
       pendingType: buildMode.pendingType,
+      primaryBarracksQueue: _queueSnapshot(
+        _primaryProductionFacility(BuildingType.barracks),
+      ),
+      primaryWarFactoryQueue: _queueSnapshot(
+        _primaryProductionFacility(BuildingType.warFactory),
+      ),
+      selectedRefineryQueue: _queueSnapshot(
+        _singleSelectedBuildingOfType(BuildingType.refinery),
+      ),
       onSelectStructure: _toggleBuildMode,
-      onProduceInfantry: _produceInfantry,
-      onProduceHarvester: _produceHarvester,
-      onProduceTank: _produceTank,
+      onQueueInfantry: _produceInfantry,
+      onQueueHarvester: _produceHarvester,
+      onQueueTank: _produceTank,
       onClose: () => setState(() => _commandDrawerOpen = false),
       onRecallGroup: _recallGroup,
       onAssignGroup: _assignGroup,
@@ -945,6 +1026,10 @@ class _GameScreenState extends State<GameScreen> {
                               primaryProduction.primaryIdsForTeam(
                             world: loop.world,
                             teamId: 1,
+                          ),
+                          productionQueueSnapshots:
+                              productionQueues.snapshotsForWorld(
+                            world: loop.world,
                           ),
                         ),
                         child: const SizedBox.expand(),

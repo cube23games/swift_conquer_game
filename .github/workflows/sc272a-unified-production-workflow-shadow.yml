@@ -1,0 +1,144 @@
+name: SwiftConquer SC-272A Unified Production Workflow Shadow
+
+on:
+  push:
+    branches:
+      - 'validation/sc272a-unified-production-workflow-v1*'
+
+permissions:
+  contents: read
+
+jobs:
+  sc272a-shadow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+    steps:
+      - name: Checkout SC-272A validation branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify exact SC-271B parent
+        run: |
+          test "$(git rev-parse HEAD^)" = \
+            "d0e8b08aff9cc2843500f05ceb25d3f4d1807570"
+
+      - name: Verify production remains locked
+        run: |
+          git fetch origin working/phase170-movement-ci
+          test "$(git rev-parse origin/working/phase170-movement-ci)" = \
+            "dbedc8dd830b380b11e36d9f8e6bf3c8065973c4"
+
+      - name: Verify SC-272A source contract
+        run: python3 tools/verify_sc272a.py
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.35.0
+          cache: true
+
+      - name: Resolve dependencies
+        run: flutter pub get
+
+      - name: Run production queue and drawer tests
+        run: |
+          flutter test test/game/production/primary_production_registry_test.dart
+          flutter test test/game/production/facility_production_queues_test.dart
+          flutter test test/features/command_drawer
+          flutter test test/features/hud
+
+      - name: Analyze SC-272A files
+        run: |
+          flutter analyze --no-fatal-infos --no-fatal-warnings \
+            lib/game/production \
+            lib/features/command_drawer \
+            lib/features/hud \
+            lib/game/ui/world_painter.dart \
+            lib/screens/game_screen.dart \
+            test/game/production \
+            test/features/command_drawer \
+            test/features/hud
+
+      - name: Run complete test suite
+        run: flutter test
+
+      - name: Prepare compatible Android shell
+        run: |
+          rm -rf android
+          flutter create . --platforms=android \
+            --project-name swift_conquer_game \
+            --org com.swiftconquer
+
+      - name: Build SC-272A device APK
+        run: |
+          flutter build apk --debug
+          cp build/app/outputs/flutter-apk/app-debug.apk \
+            build/app/outputs/flutter-apk/swiftconquer-sc272a-unified-production-debug.apk
+
+      - name: Seal evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p sc272a_evidence
+          git log -1 --format='%H  %s' > sc272a_evidence/COMMIT.txt
+          cat > sc272a_evidence/CONTRACT.md <<'EOF'
+          # SC-272A evidence contract
+          - SC-271B primary facility behavior preserved
+          - Temporary command tabs removed
+          - Expandable Structures, Infantry, Vehicles, and Tactical lanes
+          - Special Powers lane wired but hidden before advanced technology
+          - Barracks, Refinery, and War Factory own independent queues
+          - Existing orders do not transfer when Primary changes
+          - Completed items wait when no clear spawn candidate exists
+          - Queue status appears beside production buildings
+          - Production branch remains untouched
+          EOF
+          cat > sc272a_evidence/DEVICE_GATE.md <<'EOF'
+          # SC-272A combined physical-device gate
+          - No RenderFlex overflow
+          - Drawer overlays the battlefield and closes cleanly
+          - No horizontal tab strip remains
+          - Structures section opens and scrolls
+          - First Barracks shows Primary P marker
+          - Second Barracks does not steal Primary
+          - Infantry section appears and repeated taps queue units
+          - Queue progress appears beside the producing Barracks
+          - Make Primary changes future order routing only
+          - Existing old-Barracks queue remains in old Barracks
+          - War Factory behavior matches Barracks behavior
+          - Vehicles section queues Tanks
+          - Selected Refinery queues Harvesters
+          - Cancel Last removes the newest selected-building order
+          - Two-finger pan and pinch zoom still work
+          - Drawer touches never issue battlefield commands
+          EOF
+          sha256sum \
+            build/app/outputs/flutter-apk/swiftconquer-sc272a-unified-production-debug.apk \
+            > sc272a_evidence/APK_SHA256SUMS.txt
+          sha256sum sc272a_evidence/* \
+            > sc272a_evidence/SHA256SUMS.txt
+
+      - name: Upload SC-272A evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: SWIFTCONQUER_SC272A_UNIFIED_PRODUCTION_EVIDENCE
+          path: sc272a_evidence
+          retention-days: 30
+
+      - name: Upload SC-272A APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: SWIFTCONQUER_SC272A_UNIFIED_PRODUCTION_DEBUG_APK
+          path: build/app/outputs/flutter-apk/swiftconquer-sc272a-unified-production-debug.apk
+          retention-days: 14

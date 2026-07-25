@@ -2,29 +2,55 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:swift_conquer_game/features/command_drawer/command_drawer.dart';
 import 'package:swift_conquer_game/game/buildings/building_type.dart';
+import 'package:swift_conquer_game/game/core/entity_id.dart';
+import 'package:swift_conquer_game/game/production/facility_production_queues.dart';
+import 'package:swift_conquer_game/game/production/production_unit_type.dart';
+
+ProductionQueueSnapshot queueSnapshot({
+  required int buildingId,
+  required ProductionUnitType item,
+  int count = 2,
+  double progress = 0.5,
+}) {
+  return ProductionQueueSnapshot(
+    buildingId: EntityId(buildingId),
+    current: item,
+    totalOrders: count,
+    progress: progress,
+    ready: progress >= 1,
+    capacity: 5,
+  );
+}
 
 CommandDrawer testDrawer({
-  BuildingType? pendingType,
+  bool hasHq = true,
   bool hasBarracks = false,
+  bool hasRefinery = false,
   bool hasWarFactory = false,
   int barracksCount = 0,
   int warFactoryCount = 0,
-  VoidCallback? onProduceInfantry,
-  VoidCallback? onProduceTank,
+  ProductionQueueSnapshot? barracksQueue,
+  ProductionQueueSnapshot? warFactoryQueue,
+  VoidCallback? onQueueInfantry,
+  VoidCallback? onQueueTank,
 }) {
   return CommandDrawer(
-    hasHq: true,
+    hasHq: hasHq,
     hasBarracks: hasBarracks,
-    hasRefinery: false,
+    hasRefinery: hasRefinery,
     hasWarFactory: hasWarFactory,
+    hasAdvancedTech: false,
     barracksCount: barracksCount,
     warFactoryCount: warFactoryCount,
     selectedRefinery: false,
-    pendingType: pendingType,
+    pendingType: null,
+    primaryBarracksQueue: barracksQueue,
+    primaryWarFactoryQueue: warFactoryQueue,
+    selectedRefineryQueue: null,
     onSelectStructure: (_) {},
-    onProduceInfantry: onProduceInfantry ?? () {},
-    onProduceHarvester: () {},
-    onProduceTank: onProduceTank ?? () {},
+    onQueueInfantry: onQueueInfantry ?? () {},
+    onQueueHarvester: () {},
+    onQueueTank: onQueueTank ?? () {},
     onClose: () {},
     onRecallGroup: (_) {},
     onAssignGroup: (_) {},
@@ -36,7 +62,7 @@ CommandDrawer testDrawer({
 }
 
 void main() {
-  testWidgets('drawer fits a short landscape phone and exposes all structures',
+  testWidgets('short landscape drawer uses expandable sections without tabs',
       (tester) async {
     await tester.binding.setSurfaceSize(const Size(640, 360));
     addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -44,36 +70,21 @@ void main() {
     await tester.pumpWidget(MaterialApp(
       home: Align(
         alignment: Alignment.centerRight,
-        child: SizedBox(width: 300, child: testDrawer()),
+        child: SizedBox(width: 320, child: testDrawer()),
       ),
     ));
 
-    expect(tester.takeException(), isNull);
+    expect(find.text('STRUCTURES'), findsOneWidget);
+    expect(find.text('TACTICAL'), findsOneWidget);
+    expect(find.byType(ChoiceChip), findsNothing);
     expect(find.text('Power Plant'), findsOneWidget);
-    expect(find.text('Barracks'), findsOneWidget);
-    expect(find.text('Refinery'), findsOneWidget);
     expect(find.text('War Factory'), findsOneWidget);
-  });
-
-  testWidgets('infantry tab explains its unlock requirement', (tester) async {
-    await tester.binding.setSurfaceSize(const Size(640, 360));
-    addTearDown(() => tester.binding.setSurfaceSize(null));
-
-    await tester.pumpWidget(MaterialApp(home: testDrawer(
-      pendingType: BuildingType.powerPlant,
-    )));
-
-    await tester.tap(find.text('Infantry'));
-    await tester.pump();
-
-    expect(find.text('Rifle Infantry'), findsOneWidget);
-    expect(find.text('Requires Barracks'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('infantry production routes through Primary Barracks',
+  testWidgets('Barracks adds Infantry section and displays queue status',
       (tester) async {
-    var produced = false;
+    var queued = false;
     await tester.binding.setSurfaceSize(const Size(640, 360));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
@@ -81,41 +92,61 @@ void main() {
       home: testDrawer(
         hasBarracks: true,
         barracksCount: 2,
-        onProduceInfantry: () => produced = true,
+        barracksQueue: queueSnapshot(
+          buildingId: 7,
+          item: ProductionUnitType.rifleInfantry,
+        ),
+        onQueueInfantry: () => queued = true,
       ),
     ));
 
-    await tester.tap(find.text('Infantry'));
-    await tester.pump();
+    expect(find.text('INFANTRY'), findsOneWidget);
+    await tester.tap(find.text('INFANTRY'));
+    await tester.pumpAndSettle();
 
-    expect(find.text('Primary Barracks • 2 online'), findsOneWidget);
+    expect(find.textContaining('Primary Barracks #7'), findsWidgets);
+    expect(find.text('Rifle Infantry'), findsOneWidget);
     await tester.tap(find.text('Rifle Infantry'));
     await tester.pump();
-    expect(produced, isTrue);
+    expect(queued, isTrue);
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('tank production routes through Primary War Factory',
+  testWidgets('War Factory adds Vehicles section and queues Tank',
       (tester) async {
-    var produced = false;
+    var queued = false;
     await tester.binding.setSurfaceSize(const Size(640, 360));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
     await tester.pumpWidget(MaterialApp(
       home: testDrawer(
         hasWarFactory: true,
-        warFactoryCount: 2,
-        onProduceTank: () => produced = true,
+        warFactoryCount: 1,
+        warFactoryQueue: queueSnapshot(
+          buildingId: 9,
+          item: ProductionUnitType.tank,
+          count: 1,
+          progress: 1,
+        ),
+        onQueueTank: () => queued = true,
       ),
     ));
 
-    await tester.tap(find.text('Vehicles'));
-    await tester.pump();
+    expect(find.text('VEHICLES'), findsOneWidget);
+    await tester.tap(find.text('VEHICLES'));
+    await tester.pumpAndSettle();
 
-    expect(find.text('Primary War Factory • 2 online'), findsOneWidget);
+    expect(find.textContaining('Primary War Factory #9'), findsWidgets);
+    expect(find.textContaining('READY'), findsWidgets);
     await tester.tap(find.text('Tank'));
     await tester.pump();
-    expect(produced, isTrue);
+    expect(queued, isTrue);
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('Special Powers stays hidden before advanced technology',
+      (tester) async {
+    await tester.pumpWidget(MaterialApp(home: testDrawer()));
+    expect(find.text('SPECIAL POWERS'), findsNothing);
   });
 }

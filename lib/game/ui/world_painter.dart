@@ -6,6 +6,8 @@ import '../buildings/building_footprint.dart';
 import '../buildings/building_type.dart';
 import '../core/entity_id.dart';
 import '../core/world_state.dart';
+import '../production/facility_production_queues.dart';
+import '../production/production_unit_type.dart';
 import '../map/map_definition.dart';
 import '../map/map_grid.dart';
 import '../math/vec2.dart';
@@ -21,6 +23,7 @@ class WorldPainter extends CustomPainter {
   final BuildingType? pendingType;
   final Rect? selectionBoxScreen;
   final Set<EntityId> primaryProductionFacilities;
+  final Map<EntityId, ProductionQueueSnapshot> productionQueueSnapshots;
 
   WorldPainter({
     required this.world,
@@ -32,6 +35,8 @@ class WorldPainter extends CustomPainter {
     required this.pendingType,
     required this.selectionBoxScreen,
     this.primaryProductionFacilities = const <EntityId>{},
+    this.productionQueueSnapshots =
+        const <EntityId, ProductionQueueSnapshot>{},
   });
 
   @override
@@ -159,6 +164,11 @@ class WorldPainter extends CustomPainter {
         _drawPrimaryProductionBadge(canvas, rect);
       }
 
+      final queue = productionQueueSnapshots[id];
+      if (queue != null) {
+        _drawProductionQueue(canvas, rect, queue);
+      }
+
       final tp = TextPainter(
         text: TextSpan(
           text: type.label,
@@ -190,6 +200,59 @@ class WorldPainter extends CustomPainter {
         );
       }
     }
+  }
+
+  void _drawProductionQueue(
+    Canvas canvas,
+    Rect buildingRect,
+    ProductionQueueSnapshot queue,
+  ) {
+    final width = buildingRect.width.clamp(58.0, 112.0).toDouble();
+    final rect = Rect.fromLTWH(
+      buildingRect.left,
+      buildingRect.bottom + 5,
+      width,
+      22,
+    );
+
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(rect, const Radius.circular(5)),
+      Paint()..color = const Color(0xDD111827),
+    );
+
+    final progressRect = Rect.fromLTWH(
+      rect.left + 3,
+      rect.bottom - 5,
+      (rect.width - 6) * queue.progress,
+      3,
+    );
+    canvas.drawRect(
+      progressRect,
+      Paint()
+        ..color = queue.ready
+            ? const Color(0xFFEAB308)
+            : const Color(0xFF38BDF8),
+    );
+
+    final item = queue.current;
+    final label = item == null
+        ? '${queue.totalOrders}'
+        : '${item.shortLabel} ${queue.totalOrders}/${queue.capacity}'
+            '${queue.ready ? " READY" : ""}';
+
+    final tp = TextPainter(
+      text: TextSpan(
+        text: label,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 9,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout(maxWidth: rect.width - 6);
+
+    tp.paint(canvas, Offset(rect.left + 3, rect.top + 2));
   }
 
   void _drawPrimaryProductionBadge(Canvas canvas, Rect rect) {
@@ -335,7 +398,7 @@ class WorldPainter extends CustomPainter {
 
   void _drawHudHint(Canvas canvas, Size size) {
     final hint = pendingType == null
-        ? '1 finger select. 2 fingers pan. 3 fingers zoom.'
+        ? '1 finger select. 2 fingers pan + pinch zoom.'
         : 'Build mode: ${pendingType!.label}';
 
     final tp = TextPainter(
