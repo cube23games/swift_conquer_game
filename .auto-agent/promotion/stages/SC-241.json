@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-241: Typed deterministic damage packets",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/combat/damage_packet.dart",
+      "sha256": "2e3ebfde86f225aca9e0a2e1008649aa5cc066933233ec06d9f77225396b07f8"
+    },
+    {
+      "path": "test/sc_master/combat/sc241_damage_packet_test.dart",
+      "sha256": "9f0bfcbefd91534d2a3348067059f3e1ab080030664b6b59321ca5f471fccdc1"
+    }
+  ],
+  "group": "combat",
+  "number": 241,
+  "required_tokens": [],
+  "stage": "SC-241",
+  "title": "Typed deterministic damage packets"
+}
