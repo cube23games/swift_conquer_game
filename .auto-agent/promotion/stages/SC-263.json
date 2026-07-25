@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-263: AI combat planner",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/ai/ai_combat_planner.dart",
+      "sha256": "a8ef45903877c5553ff0a684ed936cd50d562eec27f421cd648542bedb6488b8"
+    },
+    {
+      "path": "test/sc_master/final/sc263_ai_combat_test.dart",
+      "sha256": "879ba1435ef00e6a394deb54fb9f88600f7b37e50834001740e8d5708f3c62f4"
+    }
+  ],
+  "group": "final",
+  "number": 263,
+  "required_tokens": [],
+  "stage": "SC-263",
+  "title": "AI combat planner"
+}
