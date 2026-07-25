@@ -1,0 +1,19 @@
+{
+  "commit_message": "SC-259: Configurable balance profile and scale targets",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/balance/balance_profile.dart",
+      "sha256": "f17d95ae2b600c1806c7b3fbb70045af76c91d2b90039861634f9c5d83aa9f1f"
+    },
+    {
+      "path": "test/sc_master/domains/sc259_balance_profile_test.dart",
+      "sha256": "35cfb2d8c9dcf4b016efc4dff136966d4ac3032a0f756131e335895c2d798d9c"
+    }
+  ],
+  "group": "domains",
+  "number": 259,
+  "required_tokens": [],
+  "stage": "SC-259",
+  "title": "Configurable balance profile and scale targets"
+}
