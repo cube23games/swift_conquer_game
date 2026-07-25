@@ -1,0 +1,27 @@
+{
+  "commit_message": "SC-219: Map grid, spawns, blocked cells, and resources",
+  "device_gate": false,
+  "files": [
+    {
+      "path": "lib/sc_master/map/grid_cell.dart",
+      "sha256": "a384f88b905aa41a2a5a4d7cabec1ba7cd04db6658b4190b8041e77a91620326"
+    },
+    {
+      "path": "lib/sc_master/map/map_runtime.dart",
+      "sha256": "e6984a24fe13fba117c1749042a4176a7602cbf6276fdf6ee4c1ce118078b0d3"
+    },
+    {
+      "path": "lib/sc_master/map/map_spec.dart",
+      "sha256": "04c6ae3176ea2391c7b393a44b87831146a0b64803a35770e75947c49effbb8e"
+    },
+    {
+      "path": "test/sc_master/foundation/sc219_map_runtime_test.dart",
+      "sha256": "6fe1a53fc83ae39f645ab44da568140a1e2808f2d043fbf183ad63fc13496be7"
+    }
+  ],
+  "group": "foundation",
+  "number": 219,
+  "required_tokens": [],
+  "stage": "SC-219",
+  "title": "Map grid, spawns, blocked cells, and resources"
+}
