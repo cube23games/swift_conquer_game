@@ -64,7 +64,7 @@ class RtsProductionDrawer extends StatelessWidget {
         key: PageStorageKey<String>('sc300-section-$title'),
         initiallyExpanded: initiallyExpanded,
         enabled: enabled,
-        maintainState: true,
+        maintainState: false,
         leading: Icon(
           icon,
           color: enabled ? Colors.white70 : Colors.white30,
