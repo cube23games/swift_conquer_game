@@ -563,6 +563,9 @@ class RtsProductionDrawer extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           'SWIFT PRODUCTION',
+                          maxLines: 1,
+                          softWrap: false,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w900,
@@ -571,6 +574,9 @@ class RtsProductionDrawer extends StatelessWidget {
                         ),
                         Text(
                           'deterministic mobile RTS command surface',
+                          maxLines: 1,
+                          softWrap: false,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: Colors.white38,
                             fontSize: 9,

@@ -1,30 +1,30 @@
-name: SwiftConquer SC-300 v7 RenderFlex Diagnostic Shadow
+name: SwiftConquer SC-300 Classic RTS Application v8 Shadow
 
 on:
   push:
     branches:
-      - 'validation/sc300-renderflex-diagnostic-v7*'
+      - 'validation/sc300-classic-rts-application-v8*'
 
 permissions:
   contents: read
 
 jobs:
-  sc300-v7-diagnostic:
+  sc300-v8-shadow:
     runs-on: ubuntu-latest
     timeout-minutes: 180
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
-      - name: Checkout SC-300 v7 diagnostic branch
+      - name: Checkout SC-300 v8 validation branch
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Verify exact SC-300 v6 parent
+      - name: Verify exact SC-300 v7 diagnostic parent
         run: |
           test "$(git rev-parse HEAD^)" = \
-            "c4704460bc5c67fd5bbb6cd8b476a256d7d6a102"
+            "438e560483b69f971983a61ad19d557c2fa0b0a1"
 
       - name: Verify protected production remains locked
         run: |
@@ -35,8 +35,8 @@ jobs:
       - name: Verify SC-300 clean-room application contract
         run: python3 tools/verify_sc300.py
 
-      - name: Verify SC-300 v7 RenderFlex diagnostic contract
-        run: python3 tools/verify_sc300_v7.py
+      - name: Verify SC-300 v8 exact drawer-header repair contract
+        run: python3 tools/verify_sc300_v8.py
 
       - name: Set up Java
         uses: actions/setup-java@v5
