@@ -2,10 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import '../../sc_master/core/id/entity_id.dart';
 import '../../sc_master/core/math/vec2.dart';
-import '../../sc_master/world/building_state.dart';
-import '../../sc_master/world/unit_state.dart';
 import '../catalog/rts_catalog.dart';
 import '../runtime/runtime_queue.dart';
 import '../runtime/swift_rts_runtime.dart';
@@ -278,7 +275,7 @@ class SwiftRtsPainter extends CustomPainter {
       final queue = runtime.facilityQueueSnapshot(building.id);
       if (queue != null && queue.count > 0) {
         _queueBar(
-          canvas,
+          canvas: canvas,
           buildingRect: rect,
           queue: queue,
         );
@@ -286,7 +283,7 @@ class SwiftRtsPainter extends CustomPainter {
         final structureQueue = runtime.structureQueueSnapshot(building.teamId);
         if (structureQueue.count > 0) {
           _queueBar(
-            canvas,
+            canvas: canvas,
             buildingRect: rect,
             queue: structureQueue,
           );
@@ -321,7 +318,7 @@ class SwiftRtsPainter extends CustomPainter {
             RRect.fromRectAndRadius(
               Rect.fromCenter(
                 center: center,
-                width: (2(7 * camera.zoom.clamp(0.75, 1.2)).toDouble()).toDouble(),
+                width: (27 * camera.zoom.clamp(0.75, 1.2)).toDouble(),
                 height: (18 * camera.zoom.clamp(0.75, 1.2)).toDouble(),
               ),
               const Radius.circular(3),
