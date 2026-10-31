@@ -123,8 +123,9 @@ class RtsProductionDrawer extends StatelessWidget {
   }) {
     return SizedBox(
       width: width,
-      height: 92,
-      child: Material(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 92),
+        child: Material(
         color: highlighted
             ? const Color(0xFF263957)
             : const Color(0xFF182337),
@@ -186,6 +187,7 @@ class RtsProductionDrawer extends StatelessWidget {
             ),
           ),
         ),
+      ),
       ),
     );
   }
@@ -600,7 +602,7 @@ class RtsProductionDrawer extends StatelessWidget {
                     subtitle: _hasHq
                         ? 'HQ construction queue'
                         : 'Deploy HQ to unlock',
-                    initiallyExpanded: true,
+                    initiallyExpanded: _hasHq,
                     enabled: _hasHq,
                     child: _structures(context),
                   ),

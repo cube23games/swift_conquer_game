@@ -1,30 +1,30 @@
-name: SwiftConquer SC-300 Classic RTS Application v3 Shadow
+name: SwiftConquer SC-300 Classic RTS Application v4 Shadow
 
 on:
   push:
     branches:
-      - 'validation/sc300-classic-rts-application-v3*'
+      - 'validation/sc300-classic-rts-application-v4*'
 
 permissions:
   contents: read
 
 jobs:
-  sc300-v3-shadow:
+  sc300-v4-shadow:
     runs-on: ubuntu-latest
     timeout-minutes: 180
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
-      - name: Checkout SC-300 v3 validation branch
+      - name: Checkout SC-300 v4 validation branch
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Verify exact failed SC-300 v1 parent
+      - name: Verify exact SC-300 v3 parent
         run: |
           test "$(git rev-parse HEAD^)" = \
-            "cc5729b4105912e2849309dad4cb262a58165622"
+            "21769ad963054a3e0b6e52dedc3faa78e8b07994"
 
       - name: Verify protected production remains locked
         run: |
@@ -35,8 +35,8 @@ jobs:
       - name: Verify SC-300 clean-room application contract
         run: python3 tools/verify_sc300.py
 
-      - name: Verify SC-300 v3 analyzer repair contract
-        run: python3 tools/verify_sc300_v3.py
+      - name: Verify SC-300 v4 short-landscape repair contract
+        run: python3 tools/verify_sc300_v4.py
 
       - name: Set up Java
         uses: actions/setup-java@v5
