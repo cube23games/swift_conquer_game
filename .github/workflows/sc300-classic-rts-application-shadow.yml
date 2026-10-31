@@ -1,0 +1,203 @@
+name: SwiftConquer SC-300 Classic RTS Application Shadow
+
+on:
+  push:
+    branches:
+      - 'validation/sc300-classic-rts-application-v1*'
+
+permissions:
+  contents: read
+
+jobs:
+  sc300-shadow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+    steps:
+      - name: Checkout SC-300 validation branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify exact green SC-271B parent
+        run: |
+          test "$(git rev-parse HEAD^)" = \
+            "d0e8b08aff9cc2843500f05ceb25d3f4d1807570"
+
+      - name: Verify protected production remains locked
+        run: |
+          git fetch origin working/phase170-movement-ci
+          test "$(git rev-parse origin/working/phase170-movement-ci)" = \
+            "dbedc8dd830b380b11e36d9f8e6bf3c8065973c4"
+
+      - name: Verify SC-300 clean-room application contract
+        run: python3 tools/verify_sc300.py
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.35.0
+          cache: true
+
+      - name: Resolve dependencies
+        run: flutter pub get
+
+      - name: Analyze new application surface
+        run: |
+          flutter analyze --no-fatal-infos --no-fatal-warnings \
+            lib/sc_app \
+            lib/main.dart \
+            test/sc_app
+
+      - name: Run SC-300 runtime and determinism tests
+        run: |
+          flutter test test/sc_app/runtime --reporter expanded
+
+      - name: Run SC-300 short-landscape UI tests
+        run: |
+          flutter test test/sc_app/ui --reporter expanded
+
+      - name: Re-run SC-213 through SC-270 master simulation suite
+        run: |
+          flutter test test/sc_master --reporter expanded
+
+      - name: Run complete repository test suite
+        run: flutter test --reporter expanded
+
+      - name: Prepare compatible Android shell
+        run: |
+          rm -rf android
+          flutter create . --platforms=android \
+            --project-name swift_conquer_game \
+            --org com.swiftconquer
+
+      - name: Build SC-300 device APK
+        run: |
+          flutter build apk --debug
+          cp build/app/outputs/flutter-apk/app-debug.apk \
+            build/app/outputs/flutter-apk/swiftconquer-sc300-classic-rts-application-debug.apk
+
+      - name: Seal SC-300 evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p sc300_evidence
+
+          git log -1 --format='%H  %s' > sc300_evidence/COMMIT.txt
+
+          cat > sc300_evidence/REFERENCE_POLICY.md <<'EOF'
+          # Clean-room reference policy
+          SC-300 was architecturally informed by public/open RTS implementations:
+          EA Tiberian Dawn, EA Red Alert, CnCNet Red Alert, and OpenRA.
+          No third-party gameplay source was copied into lib/sc_app.
+          Tiberian Sun community projects were contextual references only;
+          EA has not published a full official Tiberian Sun engine source release
+          alongside the Tiberian Dawn/Red Alert GPL releases.
+          EOF
+
+          cat > sc300_evidence/CONTRACT.md <<'EOF'
+          # SC-300 application evidence contract
+          - central Mobile HQ remains explicit-deploy
+          - SwiftConquer starts with 15,000 prototype credits
+          - ore/refinery/silo economy is live
+          - power and low-power production penalties are live
+          - prerequisite-driven HQ structure construction queue
+          - ready-to-place structures
+          - independent facility queues
+          - Primary production routing with reassignment and fallback
+          - existing queues remain with original facilities
+          - blocked exits hold completed units READY
+          - rally points
+          - expandable mobile production lanes
+          - Engineer repair/capture/sabotage
+          - Spy stolen-tech compromise
+          - locked compromised-building 10 percent purge
+          - hidden/explored/visible fog states
+          - generic advanced-tech special-power charging framework
+          - deterministic AI/combat/movement
+          - 100-unit standard cap and optional 200-unit large-battle cap
+          - paid manual repair toggle and Engineer repair are non-stacking
+          - low-power mechanical degradation is active with prototype tuning
+          - integrity mismatches visibly mark, diminish, then eliminate assets
+          - 10–15 minute match rules and sudden-death storm
+          - replay journal/state hash/integrity-monitor hooks
+          - four recovered legacy factions are preserved: Swift Dominion, Iron Pact, Void Syndicate, Verdant Union
+          - six modern faction slots remain data-driven; final modern identities are pending
+          - recovered legacy DLC names are preserved: Faction Ascension, War Machines, Void Expansion, Verdant Worlds
+          - modern DLC contents remain unresolved and are not invented
+          - ordinary building sale stays disabled until final rate is approved
+          - production branch remains untouched
+          EOF
+
+          cat > sc300_evidence/DEVICE_GATE.md <<'EOF'
+          # SC-300 physical-device gate
+          - App boots directly into the new SwiftConquer RTS battlefield
+          - No RenderFlex overflow in normal landscape orientation
+          - Central Mobile HQ can move and does not deploy automatically
+          - Deploy HQ action works explicitly
+          - Production drawer overlays battlefield and closes/opens cleanly
+          - Drawer touches do not issue battlefield commands
+          - Structures lane queues and places Power Plant/Barracks/Refinery/War Factory
+          - Structure queue progress appears at HQ
+          - Credits fall when production is queued
+          - Ore fields are visible where explored
+          - Harvester collects ore and returns to Refinery
+          - Silo capacity limits ore storage
+          - Low-power state is visible and slows production
+          - First Barracks and War Factory receive Primary P markers
+          - Second matching facility does not steal Primary
+          - Make Primary changes future routing only
+          - Existing queue stays with original building
+          - Facility queue progress appears beside buildings
+          - Blocked exit shows READY instead of stacking units
+          - Rally point can be set and new units move toward it
+          - Infantry, Engineer, Harvester, Tank prototype production works
+          - Engineer repair/capture/sabotage modes are reachable
+          - Spy infiltration can compromise a building
+          - Purging a compromised owned source shows locked 10% rule
+          - Advanced Tech unlocks Operations and generic Special Power Slot 1
+          - Fog transitions hidden -> explored -> visible
+          - One-finger selection and drag box work
+          - Two-finger pan + pinch zoom work simultaneously
+          - Control groups 1–7 recall/assign
+          - Camera bookmarks B1–B5 save/recall
+          - Enemy deterministic AI moves/attacks without UI input
+          - Health/destruction works in combat
+          - No unit production stacking at occupied exits
+          - Production branch remains untouched
+          EOF
+
+          cp docs/SC300_CLEAN_ROOM_REFERENCES.md \
+            sc300_evidence/CLEAN_ROOM_REFERENCES.md
+          cp docs/SC300_APPLICATION_CONTRACT.md \
+            sc300_evidence/APPLICATION_CONTRACT.md
+
+          sha256sum \
+            build/app/outputs/flutter-apk/swiftconquer-sc300-classic-rts-application-debug.apk \
+            > sc300_evidence/APK_SHA256SUMS.txt
+
+          sha256sum sc300_evidence/* \
+            > sc300_evidence/SHA256SUMS.txt
+
+      - name: Upload SC-300 evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: SWIFTCONQUER_SC300_CLASSIC_RTS_APPLICATION_EVIDENCE
+          path: sc300_evidence
+          retention-days: 30
+
+      - name: Upload SC-300 APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: SWIFTCONQUER_SC300_CLASSIC_RTS_APPLICATION_DEBUG_APK
+          path: build/app/outputs/flutter-apk/swiftconquer-sc300-classic-rts-application-debug.apk
+          retention-days: 14

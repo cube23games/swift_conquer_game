@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'sc_app/ui/swift_conquer_rts_screen.dart';
 import 'sc_master/ui/sc_master_debug_screen.dart';
 import 'screens/game_screen.dart';
 
 const bool _useMasterSlice =
     bool.fromEnvironment('SC_MASTER_SLICE', defaultValue: false);
+const bool _useLegacyGameScreen =
+    bool.fromEnvironment('SC_LEGACY_GAME_SCREEN', defaultValue: false);
 
-Future<void> _applyDemoSystemUi() async {
+Future<void> _applyGameSystemUi() async {
   await SystemChrome.setPreferredOrientations(const [
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
@@ -17,7 +20,7 @@ Future<void> _applyDemoSystemUi() async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await _applyDemoSystemUi();
+  await _applyGameSystemUi();
   runApp(const SwiftConquerApp());
 }
 
@@ -34,7 +37,7 @@ class _SwiftConquerAppState extends State<SwiftConquerApp>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _applyDemoSystemUi();
+    _applyGameSystemUi();
   }
 
   @override
@@ -46,7 +49,7 @@ class _SwiftConquerAppState extends State<SwiftConquerApp>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      _applyDemoSystemUi();
+      _applyGameSystemUi();
     }
   }
 
@@ -54,7 +57,11 @@ class _SwiftConquerAppState extends State<SwiftConquerApp>
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: _useMasterSlice ? ScMasterDebugScreen() : GameScreen(),
+      home: _useMasterSlice
+          ? ScMasterDebugScreen()
+          : _useLegacyGameScreen
+              ? GameScreen()
+              : SwiftConquerRtsScreen(),
     );
   }
 }
